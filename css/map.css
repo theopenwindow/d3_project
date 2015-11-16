@@ -1,0 +1,41 @@
+body {
+    font-family: 'Slabo 27px', serif;
+    padding: 40px;
+}
+
+
+#map.unfocused{
+                fill-opacity: 30%;
+            }
+
+#map.focused {
+                fill: none;
+                stroke-width: 1.5px;
+                stroke-opacity: 100%;
+                stroke: #912F3A;
+            }
+
+#map.svg path:hover {
+    opacity: .3;
+}
+
+#map.countries {
+    stroke: #fff;
+    stroke-width:0.8px;
+}
+
+#map.legendLinear text {
+    font-size: 9px;
+}
+
+#map.tooltip {
+                position: absolute;
+                z-index: 10;
+            }
+
+#map.tooltip p {
+                background-color: rgba(255, 255, 255, 0.7);             
+                box-shadow: 5px 3px 3px #DCDEDE;
+                padding: 1px 3px 1px 3px;
+                font-size: 80%
+            }

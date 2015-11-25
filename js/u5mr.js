@@ -1,24 +1,24 @@
 var regions = { "SAS": "South Asia" , "ECS": "Europe and Central Asia", "MEA": "Middle East & North Africa", "SSF": "Sub-Saharan Africa", "LCN": "Latin America & Caribbean", "EAS": "East Asia &amp; Pacific", "NAC": "North America" },
-	w = 850,
-	h = 450,
-	margin = 30,
-	startYear = 1960, 
-	endYear = 2015,
-	startu5mr = 0,
-	endu5mr = 443.5,
-	years = d3.range(startYear, endYear),
-	y = d3.scale.linear().domain([endu5mr, startu5mr]).range([0 + margin, h - margin]),
-	x = d3.scale.linear().domain([1960, 2015]).range([0 + margin -5, w]);
+    w = 850,
+    h = 450,
+    margin = 30,
+    startYear = 1960, 
+    endYear = 2015,
+    startu5mr = 0,
+    endu5mr = 443.5,
+    years = d3.range(startYear, endYear + 1),
+    y = d3.scale.linear().domain([endu5mr, startu5mr]).range([0 + margin, h - margin]),
+    x = d3.scale.linear().domain([1960, 2015]).range([0 + margin -5, w]);
 
 var vis = d3.select("#vis")
-    .append("svg:svg")
+    .append("svg")
     .attr("width", w)
     .attr("height", h)
-    .append("svg:g");
-			
+    .append("g");
+            
 var line = d3.svg.line()
-    .x(function(d,i) { return x(d.x); })
-    .y(function(d) { return y(d.y); });
+    .x(function(d) { console.log(d); return x(d.x); })
+    .y(function(d) { console.log(d.y); return y(d.y); });
 
 
 // Regions
@@ -34,10 +34,9 @@ var startEnd = {},
     countryCodes = {};
 d3.text('data/u5mr_cleaned.csv', 'text/csv', function(text) {
     var countries = d3.csv.parseRows(text);
-    console.log(countries);
     
     for (i=1; i < countries.length; i++) {
-        var values = countries[i].slice(2, countries[i.length-1]);
+        var values = countries[i].slice(2, countries[i.length]);
         var currData = [];
         countryCodes[countries[i][1]] = countries[i][0];
         
@@ -58,7 +57,7 @@ d3.text('data/u5mr_cleaned.csv', 'text/csv', function(text) {
         }
         
         // Actual line
-        vis.append("svg:path")
+        vis.append("path")
             .data([currData])
             .attr("country", countries[i][1])
             .attr("class", countries_regions[countries[i][1]])
@@ -67,8 +66,8 @@ d3.text('data/u5mr_cleaned.csv', 'text/csv', function(text) {
             .on("mouseout", onmouseout);
     }
 });  
-    
-vis.append("svg:line")
+/////////////////////////////////AXIS   
+vis.append("line")
     .attr("x1", x(startYear))
     .attr("y1", y(startu5mr))
     .attr("x2", x(endYear))
@@ -81,10 +80,11 @@ vis.append("svg:line")
     .attr("x2", x(startYear))
     .attr("y2", y(endu5mr))
     .attr("class", "axis")
-			
+
+////////////////////////////////LABEL            
 vis.selectAll(".xLabel")
     .data(x.ticks(5))
-    .enter().append("svg:text")
+    .enter().append("text")
     .attr("class", "xLabel")
     .text(String)
     .attr("x", function(d) { return x(d) })
@@ -93,26 +93,28 @@ vis.selectAll(".xLabel")
 
 vis.selectAll(".yLabel")
     .data(y.ticks(4))
-    .enter().append("svg:text")
+    .enter().append("text")
     .attr("class", "yLabel")
     .text(String)
-	.attr("x", 0)
-	.attr("y", function(d) { return y(d) })
-	.attr("text-anchor", "right")
-	.attr("dy", 3)
-			
+    .attr("x", 0)
+    .attr("y", function(d) { return y(d) })
+    .attr("text-anchor", "right")
+    .attr("dy", 3)
+
+/////////////////////////////////TICKS   
+            
 vis.selectAll(".xTicks")
     .data(x.ticks(5))
-    .enter().append("svg:line")
+    .enter().append("line")
     .attr("class", "xTicks")
     .attr("x1", function(d) { return x(d); })
     .attr("y1", y(startu5mr))
     .attr("x2", function(d) { return x(d); })
     .attr("y2", y(startu5mr)+7)
-	
+    
 vis.selectAll(".yTicks")
     .data(y.ticks(4))
-    .enter().append("svg:line")
+    .enter().append("line")
     .attr("class", "yTicks")
     .attr("y1", function(d) { return y(d); })
     .attr("x1", x(startYear-0.5))
@@ -128,7 +130,7 @@ function onclick(d, i) {
     }
 }
 
-/*function onmouseover(d, i) {
+function onmouseover(d, i) {
     var currClass = d3.select(this).attr("class");
     d3.select(this)
         .attr("class", currClass + " current");
@@ -148,7 +150,7 @@ function onclick(d, i) {
     
     $("#default-blurb").hide();
     $("#blurb-content").html(blurb);
-}*/
+}
 function onmouseout(d, i) {
     var currClass = d3.select(this).attr("class");
     var prevClass = currClass.substring(0, currClass.length-8);

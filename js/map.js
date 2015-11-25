@@ -25,17 +25,17 @@ queue()
 function typeAndSet(d) {
     d.Year2015 = +d.Year2015;
     countryById.set(d.ISO, d);
-    console.log(countryById.set(d.ISO, d));
+    //console.log(countryById.set(d.ISO, d));
     return d;
 }
 
 function getText(d) {
  var dataRow = countryById.get(d.id);
     if (dataRow) {
-        console.log(dataRow);
+        //console.log(dataRow);
         return dataRow.Country + ": " + dataRow.Year2015 + " ‰";
     } else {
-        console.log("no dataRow", d);
+        //console.log("no dataRow", d);
         return d.properties.name + ": No data.";
     }
 }
@@ -43,10 +43,10 @@ function getText(d) {
 function getColor(d) {
     var dataRow = countryById.get(d.id);
     if (dataRow) {
-        console.log(dataRow);
+        //console.log(dataRow);
         return colorScale(dataRow.Year2015);
     } else {
-        console.log("no dataRow", d);
+        //console.log("no dataRow", d);
         return "#ccc";
     }
 }
@@ -54,22 +54,22 @@ function getColor(d) {
 
 function loaded(error, countries, mortality) {
 
-    console.log(countries);
-    console.log(mortality);
+    //console.log(countries);
+    //console.log(mortality);
 
     colorScale.domain(d3.extent(mortality, function(d) {return d.Year2015;}));
 
     var countries = topojson.feature(countries, countries.objects.units).features;
 
-    map.selectAll('#map.path.countries')
+    map.selectAll('.path.countries')
         .data(countries)
         .enter()
         .append('path')
         .attr('class', 'countries')
         .attr('d', path)
         .attr('fill', function(d,i) {
-            console.log(d);
-            console.log(d.properties.name);
+            //console.log(d);
+            //console.log(d.properties.name);
             return getColor(d);
         });
        /* .append("title")
@@ -89,10 +89,10 @@ function loaded(error, countries, mortality) {
       .orient('horizontal')
       .scale(linear);
 
-    map.select("#map.legendLinear")
+    map.select(".legendLinear")
       .call(legendLinear);
 
-    d3.selectAll("#map.path")
+    d3.selectAll(".path")
       .style('cursor','pointer')
       .on("mouseover", mouseoverFunc)
       .on("mouseout", mouseoutFunc)

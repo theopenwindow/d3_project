@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+        <meta charset="utf-8">
+        <title>Transition Plot</title>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+        <script type="text/javascript" src="./jquery-1.4.4.min.js"></script>
+
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+      <link href='https://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
+		<style type="text/css">
+			body {
+				background-color: white;
+				font-family: Helvetica, Arial, sans-serif;
+			}
+
+			h1 {
+				font-size: 24px;
+				margin: 0;
+				font-family: 'Slabo 27px', serif;
+			}
+
+			p {
+				font-size: 14px;
+				margin: 10px 0 0 0;
+				font-family: 'Slabo 27px', serif;
+			}
+
+			.selected {
+				background-color: steelblue;
+			}
+
+			svg {
+				background-color: white;
+			}
+
+			.axis path,
+			.axis line {
+				fill: none;
+				stroke: #ccc;
+				stroke-width: 1px;
+			}
+
+			circle {
+				fill: #0099FF;
+				fill-opacity: 70%;
+				stroke: white;
+				stroke-width: 0.5px;
+				stroke-opacity: 80%;
+			}
+
+
+
+			.axis text {
+				font-family: 'Open Sans', sans-serif;
+				font-size: 11px;
+				line-height: 1em;
+			}
+
+			.ralated_text {
+				padding-top: 150px;
+				padding-left: 50px;
+			}
+
+			.tooltip {
+				position: absolute;
+				z-index: 10;
+				opacity:1;
+			}
+
+			.tooltip p {
+				background-color: rgba(211, 219, 222, 0.7 );
+				color: black;
+				border: none;
+				border-radius: 8px;
+				padding: 2px;
+				font-size: 12;
+			}
+
+			.circle.unfocused{
+				fill-opacity: 70%;
+			}
+
+			.circle.focused {
+				fill-opacity: 100%;
+			}			
+
+			/* this is an adjustment to bootstrap's row for my page */
+			.row {
+				padding-top: 50px;
+			}
+
+			/* this is an adjustment to bootstrap for my page */
+			.btn-group {
+				padding-top: 20px;
+			} 
+
+#filters {
+    margin-bottom: 20px;
+}
+#filters a {
+    color: #000;
+    font-size: 12px;
+    padding: 5px;
+    background: #e2e2e2;
+    cursor: pointer;
+    margin-right: 3px;
+}
+#filters a:last-child {
+    margin-right: 0;
+}
+#filters a.SAS { background: #895881; color: #fff; }
+#filters a.ECS { background: #ED7C31; color: #fff; }
+#filters a.MEA { background: #82A5C0; color: #fff; }
+#filters a.SSF { background: #6E9E75; color: #fff; }
+#filters a.LCN { background: #00BBD6; color: #fff; }
+#filters a.EAS { background: #e25f82; color: #fff; }
+#filters a.NAC { background: #be1932; color: #fff; }
+
+.SAS.highlight { fill: #895881; }
+.ECS.highlight { fill: #ED7C31; }
+.MEA.highlight { fill: #82A5C0; }
+.SSF.highlight { fill: #6E9E75; }
+.LCN.highlight { fill: #00BBD6; }
+.EAS.highlight { fill: #e25f82; }
+.NAC.highlight { fill: #be1932; }
+.highlight { r: 4px; } 
+
+circle.current, circle.highlight.current {
+    stroke: #000;
+    stroke-width: 1.7;
+}			   
+
+		</style>
+   </head>
+   <body>
+
+		<div class="container">
+		<div class="row">
+        <div class="col-md-5">
+          <h1>How is Under-5 Mortality Rate affected by the following factors?</h1>
+            			<div class="btn-group" role="group" aria-label="...">
+									  <button type="button" class="btn btn-default" id="literacy">Literacy</button>
+									  <button type="button" class="btn btn-default" id="GNI">GNI</button>
+									  <button type="button" class="btn btn-default" id="breastfeeding">breastfeeding</button>
+									  <button type="button" class="btn btn-default" id="water">water</button>
+									  <button type="button" class="btn btn-default" id="sanitation">sanitation</button>
+									  <button type="button" class="btn btn-default" id="birth">birth</button>
+						</div>
+						</br>
+						        <div id="filters">
+            <a id="EAS">East Asia and Pacific</a>
+            <a id="SAS">South Asia</a>
+            <a id="ECS">Europe and Central Asia</a>
+            <a id="MEA">Middle East and North Africa</a>
+            <a id="SSF">Sub-Saharan Africa</a>
+            <a id="LCN">Latin America and Caribbean</a>
+            <a id="NAC">North America</a>
+       							</div>
+						<div id="svg"></div>
+						<p>Source: <a href="http://www.unicef.org/">UNICEF</a></p>
+        </div>
+ 
+      </div>
+	</div>
+
+		<script type="text/javascript">
+			var width = 700;
+			var height = 450;
+
+			var margin = { top: 20, right: 10, bottom: 50, left: 80 };
+			var dotRadius = 4;
+
+			var xScale = d3.scale.linear()
+								.range([ margin.left, width - margin.right - margin.left])
+
+			var yScale = d3.scale.linear()
+								.range([ height - margin.bottom, margin.top ])
+
+			var xAxis = d3.svg.axis()
+							.scale(xScale)
+							.orient("bottom")
+							.ticks(10);
+
+			var yAxis = d3.svg.axis()
+							.scale(yScale)
+							.orient("left");							
+		
+			var svg = d3.select("#svg")
+						.append("svg")
+						.attr("width", width)
+						.attr("height", height);
+
+			var drawylabel = svg.append('text')
+								.attr("transform", "rotate(-90)")
+								.attr("x", -margin.top)
+								.attr("y", -margin.left + 103)
+								.style("text-anchor", "end")
+								.attr("class","label");
+
+
+			d3.csv("scatter_data.csv", function(data) {
+           
+
+            	xScale.domain(d3.extent(data, function(d){
+            			return + d.Year2015;
+            		}));
+            	yScale.domain(d3.extent(data, function(d){
+            			return + d.literacy;
+            		}));
+
+				var circles = svg.selectAll("circle")
+							     .data(data)
+							     .enter()
+							     .append("circle")
+							     .attr("class", function(d){
+							     	return d.RegionCode;
+							     });
+
+				circles.attr("cx", function(d) {
+						return + xScale(+d.Year2015);
+					})
+					.attr("cy", function(d) {
+						return + yScale(+d.literacy);
+					})
+					.attr("r", dotRadius)
+					.style('cursor','pointer');
+			
+
+				svg.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + (height - margin.bottom + 10) + ")")
+					.call(xAxis);
+
+				svg.append("g")
+					.attr("class", "y axis")
+					.attr("transform", "translate(" + (margin.left - 10) + ",0)")
+					.call(yAxis);
+
+				svg.append("text")
+					.attr("class", "xlabel")
+					.attr("transform", "translate(" + (width / 2) + " ," +
+								(height-15) + ")")
+					.style("text-anchor", "middle")
+					.attr("dy", "12")
+					.text("Under 5 Mortality Rate (per thousand births)")
+					.attr("font-family", "Open Sans");
+
+                var ylabel = svg.append("text")
+					.attr("class", "ylabel")
+					.attr("y", margin.left/8 + 5)
+                    .attr("x", 0 - height/3 - 30 )
+					.style("text-anchor", "middle")
+					.attr("transform", "rotate(-90)")
+					.attr("font-family", "Open Sans");	
+
+				svg.select(".y.axis")
+				   .transition()
+				   .duration(2000)
+				   .call(yAxis);
+
+
+
+				d3.select("button#literacy").classed("selected", true);
+
+//click to GNI per capita:
+					d3.select("#literacy").on("click", function() {
+						d3.selectAll("button").classed("selected", false);
+					    d3.select("button#GNI").classed("selected", true);
+
+                        yScale
+						    .domain(d3.extent(data, function(d){
+							return + d.literacy;
+            		        }));
+
+
+						circles
+							.transition()
+							.duration(2000)
+							.attr("cx", function(d) {
+								return xScale(+d.Year2015);
+								// return the value to use for your x scale here
+							})
+							.attr("cy", function(d) {
+								return yScale(+d.literacy);
+							})
+						});
+
+			
+					
+						d3.select("#GNI").on("click", function() {
+						d3.selectAll("button").classed("selected", false);
+					    d3.select("button#GNI").classed("selected", true);
+
+                        yScale
+						    .domain(d3.extent(data, function(d){
+							return + d.GNI;
+            		        }));
+						svg.select(".y.axis")
+						    .transition()
+						    .duration(2000)
+						    .call(yAxis);
+
+						circles
+							.transition()
+							.duration(2000)
+							.attr("cx", function(d) {
+								return xScale(+d.Year2015);
+								// return the value to use for your x scale here
+							})
+							.attr("cy", function(d) {
+								return yScale(+d.GNI);
+							})
+						});
+
+						d3.select("#breastfeeding").on("click", function() {
+						d3.selectAll("button").classed("selected", false);
+					    d3.select("button#breastfeeding").classed("selected", true);
+
+                        yScale
+						    .domain(d3.extent(data, function(d){
+							return + d.breastfeeding;
+            		        }));
+						svg.select(".y.axis")
+						    .transition()
+						    .duration(2000)
+						    .call(yAxis);
+
+						circles
+							.transition()
+							.duration(2000)
+							.attr("cx", function(d) {
+								return xScale(+d.Year2015);
+								// return the value to use for your x scale here
+							})
+							.attr("cy", function(d) {
+								return yScale(+d.breastfeeding);
+							})
+						});
+
+					d3.select("#water").on("click", function() {
+						d3.selectAll("button").classed("selected", false);
+					    d3.select("button#water").classed("selected", true);
+
+                        yScale
+						    .domain(d3.extent(data, function(d){
+							return + d.water;
+            		        }));
+						svg.select(".y.axis")
+						    .transition()
+						    .duration(2000)
+						    .call(yAxis);
+
+						circles
+							.transition()
+							.duration(2000)
+							/*.attr("cx", function(d) {
+								return xScale(+d.Year2015);
+								// return the value to use for your x scale here
+							})*/
+							.attr("cy", function(d) {
+								return yScale(+d.water);
+							})
+						});
+
+					d3.select("#sanitation").on("click", function() {
+						d3.selectAll("button").classed("selected", false);
+					    d3.select("button#sanitation").classed("selected", true);
+
+                        yScale
+						    .domain(d3.extent(data, function(d){
+							return + d.sanitation;
+            		        }));
+						svg.select(".y.axis")
+						    .transition()
+						    .duration(2000)
+						    .call(yAxis);
+
+						circles
+							.transition()
+							.duration(2000)
+							.attr("cy", function(d) {
+								return yScale(+d.sanitation);
+							})
+						});
+
+					d3.select("#birth").on("click", function() {
+						d3.selectAll("button").classed("selected", false);
+					    d3.select("button#birth").classed("selected", true);
+
+                        yScale
+						    .domain(d3.extent(data, function(d){
+							return + d.birth;
+            		        }));
+						svg.select(".y.axis")
+						    .transition()
+						    .duration(2000)
+						    .call(yAxis);
+
+						circles
+							.transition()
+							.duration(2000)
+							.attr("cy", function(d) {
+								return yScale(+d.birth);
+							})
+						});
+
+function showRegion(RegionCode) {
+    var countries = d3.selectAll("circle."+RegionCode);
+    console.log("circle."+RegionCode);
+    if (countries.classed('highlight')) {
+        countries.attr("class", RegionCode);
+    } else {
+        countries.classed('highlight', true);
+    }
+}
+
+
+$(document).ready(function() {
+    $('#filters a').click(function() {
+        var countryId = $(this).attr("id");
+        $(this).toggleClass(countryId);
+        showRegion(countryId);
+    });
+				
+});
+
+})
+
+
+
+
+
+
+ 
+ 
+
+		</script>
+
+   </body>
+</html>

@@ -1,18 +1,62 @@
-/* Normalize */
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, figure, form, fieldset, input, p, blockquote, th, td, legend {
-	margin: 0;
-	padding: 0;
-}
 
 body {
     font-family: 'Slabo 27px', serif;
     padding: 40px;
 }
-h1 {
+
+/*************************map********************************/
+.unfocused{
+                fill-opacity: 30%;
+            }
+
+.focused {
+                fill: none;
+                stroke-width: 1.5px;
+                stroke-opacity: 100%;
+                stroke: #912F3A;
+            }
+
+.svg path:hover {
+    opacity: .3;
 }
-h2 {
+
+.countries {
+    stroke: #fff;
+    stroke-width:0.5px;
 }
-p { line-height: 1.4em; margin-bottom: 1.0em; }
+
+.legendLinear text {
+    font-size: 9px;
+}
+
+.tooltip {
+                position: absolute;
+                z-index: 10;
+            }
+
+.tooltip p {
+                background-color: rgba(255, 255, 255, 0.7);             
+                box-shadow: 5px 3px 3px #DCDEDE;
+                padding: 1px 3px 1px 3px;
+                font-size: 80%
+            }
+
+/*************************bar********************************/
+        
+#bar    .axis path,
+#bar    .axis line {
+                fill: none;
+                stroke: black;
+                shape-rendering: crispEdges;
+            }
+
+#bar    .axis text {
+                font-family: sans-serif;
+                font-size: 11px;
+            }
+
+/*************************vis********************************/
+
 a { color: #821122; }
 #content {
     width: 925px;
@@ -43,18 +87,14 @@ a { color: #821122; }
 #vis {
     min-height: 550px;
 }
-#blurb {
-    height: 60px;
-    border-top: 1px solid #e2e2e2;
-    padding-top: 20px;
-}
 
-path {
+
+g path {
     stroke: #e2e2e2;
     stroke-width: 0.9;
-	fill: none;
+    fill: none;
 }
-path.current, path.highlight.current {
+g path.current, g path.highlight.current {
     stroke: #000;
     stroke-width: 1.7;
 }
@@ -73,16 +113,12 @@ line {
 
 text {
     font-size: 11px;
-}
 .axis {
     stroke-width: 0.8;
     stroke: #000;
 }
-.xTicks, .yTicks {
+ .xTicks, .yTicks {
     stroke-width: 0.6;
     stroke: #000;
 }
 
-
-#cite { font-size: 0.8em; text-align: right; margin-top:10px; padding-bottom: 20px; }
-#cite a { background: #e2e2e2; text-decoration: none; color: #821122; }

@@ -1,0 +1,42 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding-top: 0px;
+}
+.header {
+  height: 600px;
+  background: black;
+}
+
+h1{
+  color: white;
+  text-align: center;
+  padding-top: 250px;
+
+}
+
+.main-nav,
+.main {
+  position: relative; 
+}
+.main-nav {
+  background: #fff;
+  height: 80px;
+  z-index: 150;
+  margin-bottom: -80px;
+  box-shadow: 0 2px 3px rgba(0,0,0,.4);
+}
+header,
+.main-nav-scrolled {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+.main {
+  background: #f2f2e8;
+  padding: 110px 50px 50px;
+  column-count: 2;
+  column-gap: 40px;
+}

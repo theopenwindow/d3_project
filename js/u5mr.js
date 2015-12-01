@@ -17,8 +17,8 @@ var vis = d3.select("#vis")
     .append("g");
             
 var line = d3.svg.line()
-    .x(function(d) { console.log(d); return x(d.x); })
-    .y(function(d) { console.log(d.y); return y(d.y); });
+    .x(function(d) { return x(d.x); })
+    .y(function(d) { return y(d.y); });
 
 
 // Regions

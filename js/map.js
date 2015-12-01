@@ -25,7 +25,7 @@ queue()
 function typeAndSet(d) {
     d.Year2015 = +d.Year2015;
     countryById.set(d.ISO, d);
-    //console.log(countryById.set(d.ISO, d));
+    console.log(countryById.set(d.ISO, d));
     return d;
 }
 
@@ -43,7 +43,7 @@ function getText(d) {
 function getColor(d) {
     var dataRow = countryById.get(d.id);
     if (dataRow) {
-        //console.log(dataRow);
+        console.log(dataRow.Year2015);
         return colorScale(dataRow.Year2015);
     } else {
         //console.log("no dataRow", d);
@@ -68,10 +68,12 @@ function loaded(error, countries, mortality) {
         .attr('class', 'countries')
         .attr('d', path)
         .attr('fill', function(d,i) {
-            //console.log(d);
+            console.log(d);
             //console.log(d.properties.name);
             return getColor(d);
-        });
+
+                    });
+
        /* .append("title")
         .text(function(d) {
             return getText(d);

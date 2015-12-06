@@ -47,12 +47,6 @@ function getColor(d) {
 }
 
 
-
-
-
-
-
-
 function getText(d) {
  var dataRow = countryById.get(d.id);
     if (dataRow) {

@@ -16,6 +16,9 @@
   <script src="//d3js.org/queue.v1.min.js"></script>
   <script src="./js/d3-legend.min.js"></script>
   <script src="//d3js.org/topojson.v1.min.js"></script>
+  <!--google font-->
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
 </header>
 
 <body>      
@@ -42,22 +45,59 @@
                     <button type="button" class="btn btn-default" id="Region">Region</button>
                     <button type="button" class="btn btn-default" id="Country">Country</button>
               </div><!--btn-->
-              <div id="page1_line" style="width: 100%; height: auto;"></div>
+              <div id="page1_line"></div>
               </div>
               <div class="col-xs-6 col-md-6">
-              <div id="page1_map" style="width: 100%; height: auto;"></div>              
+              <div id="page1_map"></div>              
               </div>
         </div>
         </section>
 
         <section style="background-color:blue">...</section>
-        <section style="background-color:red">...</section>
+        
+        <section>
+        <div class="row">
+              <div class="col-xs-7 col-md-6">
+                 <div id="filters">
+                   <a id="EAS">East Asia and Pacific</a>
+                   <a id="SAS">South Asia</a>
+                   <a id="ECS">Europe and Central Asia</a>
+                   <a id="MEA">Middle East and North Africa</a>
+                   <a id="SSF">Sub-Saharan Africa</a>
+                   <a id="LCN">Latin America and Caribbean</a>
+                   <a id="NAC">North America</a>
+                 </div><!-- @end #filters -->
+                 <div id="blurb">
+                      <div id="default-blurb">
+                        <h2>World</h2>
+                        <p>The average under 5 mortality rate in the world in 2015 is 42.5 per thousand people.</p>
+                    </div>
+                    <div id="blurb-content"></div>
+                 </div>
+                 <div id="vis"></div>
+              </div>
+
+              <div class="col-xs-6 col-md-6">
+                  <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-default" id="literacy">Literacy</button>
+                    <button type="button" class="btn btn-default" id="GNI">GNI</button>
+                    <button type="button" class="btn btn-default" id="breastfeeding">breastfeeding</button>
+                    <button type="button" class="btn btn-default" id="water">water</button>
+                    <button type="button" class="btn btn-default" id="sanitation">sanitation</button>
+                    <button type="button" class="btn btn-default" id="birth">birth</button>
+                  </div>
+                  <div id="page3_scatter"></div>  
+              </div>
+        </div>        
+        </section>
       </div>    
     
 
 </body>
-<script type="text/javascript" src="./js/page1.js"></script>
+<script type="text/javascript" src="./js/page1_line.js"></script>
 <script type="text/javascript" src="./js/page1_map.js"></script>
+<script type="text/javascript" src="./js/page3_line.js"></script>
+<script type="text/javascript" src="./js/page3_scatter.js"></script>
 
 
 

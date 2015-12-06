@@ -24,39 +24,47 @@ queue()
     .defer(d3.csv, "data/u5mr_2015.csv", typeAndSet) // process
     .await(loaded);
 
-var typeAndSet = [];
 
-d3.select("#Region").on("click", function(typeAndSet){
-    typeAndSet.forEach(function(d){
-            d.Region2015 = +d.Region2015;
-            countryById.set(d.ISO, d);
-            return d;
-    })
-    return typeAndSet;
-})
+function typeAndSet(d) {
+    d.Year2015 = +d.Year2015;
+    countryById.set(d.ISO, d);
+    console.log(countryById.set(d.ISO, d));
+    return d;
+}
 
 function getColor(d) {
     var dataRow = countryById.get(d.id);
     if (dataRow) {
       //  console.log(dataRow.Year2015);
-        return colorScale(dataRow.Region2015);
+        return colorScale(dataRow.Year2015);
     } else {
         //console.log("no dataRow", d);
         return "#ccc";
     }
 }
 
+select("button#Region").on("click",function(){
 
-function getText(d) {
- var dataRow = countryById.get(d.id);
-    if (dataRow) {
-        //console.log(dataRow);
-        return dataRow.Country + ": " + dataRow.Year2015 + " ‰";
-    } else {
-        //console.log("no dataRow", d);
-        return d.properties.name + ": No data.";
+    function typeAndSet(d) {
+        d.Region2015 = +d.Region2015;
+        countryById.set(d.ISO, d);
+        console.log(countryById.set(d.ISO, d));
+        return d;
     }
-}
+
+    function getColor(d) {
+        var dataRow = countryById.get(d.id);
+        if (dataRow) {
+            return colorScale(dataRow.Region2015);
+        } else {
+            //console.log("no dataRow", d);
+            return "#ccc";
+        }
+    }
+
+})
+
+
 function loaded(error, countries, mortality) {
 
     //console.log(countries);
@@ -76,13 +84,7 @@ function loaded(error, countries, mortality) {
             //console.log(d);
             //console.log(d.properties.name);
             return getColor(d);
-
                     });
-
-       /* .append("title")
-        .text(function(d) {
-            return getText(d);
-        });*/
 
 
     var linear = colorScale;
@@ -99,38 +101,6 @@ function loaded(error, countries, mortality) {
     map.select(".legendLinear")
       .call(legendLinear);
 
-    d3.selectAll(".path")
-      .style('cursor','pointer')
-      .on("mouseover", mouseoverFunc)
-      .on("mouseout", mouseoutFunc)
-      .on("mousemove", mousemoveFunc); 
   
 
-            var tooltip = d3.select("body")
-                            .append("div")
-                            .attr("class", "tooltip");
-
-
-
-    function mouseoverFunc(d) {
-        //d3.selectAll("path.countries").classed("unfocused", true);
-        //d3.select(this).select("path.countries").classed("unfocused", false).classed("focused", true);
-
-        tooltip
-            .data(countries)
-            .style("display", null) 
-            .html("<p>" + getText(d) + "</p>");
-    }
-
-    function mouseoutFunc() {
-           // d3.selectAll("path.countries").classed("unfocused", false).classed("focused", false);
-
-            tooltip.style("display", "none");  
-    }
-
-    function mousemoveFunc(d) {
-        tooltip
-            .style("top", (d3.event.pageY - 10) + "px" )
-            .style("left", (d3.event.pageX + 10) + "px");
-    }
 }

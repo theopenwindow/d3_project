@@ -107,7 +107,7 @@
 				]);
 
 
-				var groupsLine = svgLine.selectAll("g")
+				var groups = svgLine.selectAll("g")
 									.datum(world)
 									.append("g")
 									.attr("id", function(d){
@@ -116,7 +116,7 @@
 									.attr("class", "lines");
 
 
-				groupsLine.selectAll("path")
+				groups.selectAll("path")
 						.data(function(d) { 
 							//console.log(d.mortality);
 							return [d.mortality]; 
@@ -127,6 +127,7 @@
 						.attr("d", line)
 						.style('cursor','pointer');
 
+				svgLine.append("path")
 				//Axes
 				svgLine.append("g")
 					.attr("class", "x axis")

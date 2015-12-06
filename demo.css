@@ -77,6 +77,8 @@ section {
     border-top: 10px solid black;
 }
 
+/*************************page1_line********************************/
+
 path.line {
         fill: none;
         stroke: #999999;
@@ -108,3 +110,40 @@ path.line {
         fill: #E1EAED;
         fill-opacity: 0.5;
       }
+
+/*************************page1_map********************************/
+.unfocused{
+                fill-opacity: 30%;
+            }
+
+.focused {
+                fill: none;
+                stroke-width: 1.5px;
+                stroke-opacity: 100%;
+                stroke: #912F3A;
+            }
+
+.svg path:hover {
+    opacity: .3;
+}
+
+.countries {
+    stroke: #fff;
+    stroke-width:0.5px;
+}
+
+.legendLinear text {
+    font-size: 9px;
+}
+
+.tooltip {
+                position: absolute;
+                z-index: 10;
+            }
+
+.tooltip p {
+                background-color: rgba(255, 255, 255, 0.7);             
+                box-shadow: 5px 3px 3px #DCDEDE;
+                padding: 1px 3px 1px 3px;
+                font-size: 80%
+            }

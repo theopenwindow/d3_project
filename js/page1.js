@@ -1,4 +1,4 @@
-			var width = 700;
+			var width = 600;
 			var height = 500;
 			var margin = {top: 20, right: 80, bottom: 40, left:0};
 
@@ -96,8 +96,8 @@
 						return dateFormat.parse(d);
 					}));
 
-				var world = dataset.filter(function (f){return f.country == "WLD"})[0];
-				console.log(world.mortality);
+				var world = dataset.filter(function (f){return f.country == "World"})[0];
+				console.log(world);
 
 				yScale.domain([
 					d3.max(world, function(d) {
@@ -107,7 +107,6 @@
 					}),
 					0
 				]);
-
 
 
 				var groups = svg.selectAll("g")
@@ -138,7 +137,7 @@
 
 			groups.selectAll("path")
 					.data(function(d) { 
-						//console.log(d.country);
+						console.log(d.mortality);
 						return [d.mortality]; 
 					})
 					.enter()

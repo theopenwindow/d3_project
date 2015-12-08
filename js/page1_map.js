@@ -64,7 +64,7 @@ d3.select("button#Region").on("click",function(){
 
 function redraw() {
 
-    svg.selectAll("path.countries")
+    map.selectAll("path.countries")
         .transition()
         .attr("fill", function(d,i) {
             return getColor(d); 

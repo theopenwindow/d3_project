@@ -1,3 +1,4 @@
+//draw Line Chart:
 			var width = 500;
 			var height = 500;
 			var margin = {top: 20, right: 20, bottom: 20, left:20};
@@ -46,15 +47,23 @@
 						.attr("height", height)
 						.attr("id", "svg_page1_line");
 
+			svgLine.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + (height - margin.bottom) + ")")
+					.call(page1xAxis);
 
-			d3.csv("data/total.csv", function(data) {
-				var page1years = ["1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"];
+			svgLine.append("g")
+					.attr("class", "y axis")
+					.attr("transform", "translate(" + margin.left + ",0)")
+					.call(page1yAxis);
 
-				// or 
-				// var years = d3.keys(data[0]).slice(0, 54-4); //
 
+
+			var page1years = ["1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"];
+
+			function draw_line(data){
+//restructure new dataset:
 				var dataset = [];
-
 				data.forEach(function (d, i) {
 					var themortality = [];
 					page1years.forEach(function (y) {
@@ -72,99 +81,86 @@
 						} );
 				});
 
-				//console.log(data);
-				//console.log(dataset);
-
-
+				console.log(dataset);
+//scale domains:
 				page1xScale.domain(
 					d3.extent(page1years, function(d) {
 						return page1dateFormat.parse(d);
 					}));
 
-				var world = dataset.filter(function (f){return f.country == "World"})[0];
-				console.log(world);
-
 				page1yScale.domain([
-					d3.max(world.mortality, function(d) {
+					d3.max(dataset, function(d) {
+						return d3.max(d.mortality, function(d) {
 							return +d.amount;
-						}),
+						});
+					}),
 					0
 				]);
+//draw lines:
+				var groups = svgLine.selectAll("g")
+					.data(dataset)
+					.enter()
+					.append("g")
+					.attr("class", "lines");
 
-				var groups = svgLine.datum(world)
-									.append("g")
-									.attr("id", function(d){
-											return d.country;
-										})
-									.attr("class", "lines");
+				var paths = groups.selectAll("path")
+									.data(function(d) {
+										console.log(d.mortality);
+										return [ d.mortality ]; 
+									});
+//update data to lines:
+				paths.enter()
+				     .append("path")
+				     .transition()
+				     .duration(2000)
+				     .attr("d",myLine);
 
-				groups.selectAll("path")
-						.data(function(d) { 
-							return [d.mortality]; 
-						})
-						.enter()
-						.append("path")
-						.attr("class", "line")
-						.attr("d", function(d){
-							return myLine(d);
-						})
-						.style('cursor','pointer');
+				groups.exit()
+					  .transition()
+					  .duration(2000)
+					  .style("opacity", 0)
+					  .remove();
 
-				//Axes
-				svgLine.append("g")
-					.attr("class", "x axis")
-					.attr("transform", "translate(0," + (height - margin.bottom) + ")")
-					.call(page1xAxis);
+			    svgLine.select(".y.axis")
+					   .transition()
+					   .duration(2000)
+					   .call(page1yAxis);
 
-				svgLine.append("g")
-					.attr("class", "y axis")
-					.attr("transform", "translate(" + margin.left + ",0)")
-					.call(page1yAxis);
+				svgLine.select(".x.axis")
+					   .transition()
+					   .duration(2000)
+					   .call(page1xAxis);
+			};
 
-					var groups2 = svgLine.selectAll("g")
-										.data(dataset)
-										.enter()
-										.append("g")
-										.attr("id", function(d){
-												return d.country;
-											})
-										.attr("class", "lines");
-			
+//load data:			
+ 			var dataCountry = [];
+			var dataRegion = [];
 
-			
+			function load(error, dataset1, dataset2){
+				if(error){
+					console.log(error);
+				}else{
+					console.log(dataCountry);
+					console.log(dataRegion);
+					dataCountry = dataset1;
+					dataRegion = dataset2;
+
+				}
+			};
+
+queue()
+  .defer(d3.csv, "data/total.csv")
+  .defer(d3.csv, "data/region_2.csv")
+  .await(load);
+ 
+
 			d3.select("button#Country").on("click", function(){
+				draw_line(dataCountry);
+			});
 
-					page1yScale.domain([
-						d3.max(dataset, function(d) {
-							return d3.max(d.mortality, function(d) {
-								return +d.amount;
-							});
-						}),
-						0
-					]);
+			d3.select("button#Region").on("click", function(){
+				draw_line(dataRegion);
+			});
 
-					svgLine.select(".y.axis")
-						   .transition()
-						   .duration(2000)
-						   .call(page1yAxis);
-
-
-					groups2.selectAll("path")
-							.data(function(d) { 
-								return [d.mortality]; 
-							})
-							.enter()
-							.append("path")
-							.transition()
-						    .duration(2000)
-							.attr("class", "line")
-							.attr("d", function(d){
-								return myLine(d);
-							})
-							.style('cursor','pointer');
-				
-				})
-
-	});
-
+			
 

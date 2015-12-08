@@ -58,8 +58,8 @@
 					.call(page1yAxis);
 
 
-
 			var page1years = ["1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"];
+
 
 			function draw_line(data){
 //restructure new dataset:
@@ -75,7 +75,7 @@
  							});
 						}
 					});
-					dataset.push( {
+					dataset.push({
 						country: d.CountryName,
 						mortality: themortality  
 						} );
@@ -115,7 +115,7 @@
 				     .duration(2000)
 				     .attr("d",myLine);
 
-				groups.exit()
+				paths.exit()
 					  .transition()
 					  .duration(2000)
 					  .style("opacity", 0)
@@ -135,15 +135,18 @@
 //load data:			
  			var dataCountry = [];
 			var dataRegion = [];
+			var dataWorld = [];
 
-			function load(error, dataset1, dataset2){
+			function load(error, dataset1, dataset2, dataset3){
 				if(error){
 					console.log(error);
 				}else{
 					console.log(dataCountry);
 					console.log(dataRegion);
+					console.log(dataWorld);
 					dataCountry = dataset1;
 					dataRegion = dataset2;
+					dataWorld = dataset3;
 
 				}
 			};
@@ -151,6 +154,7 @@
 queue()
   .defer(d3.csv, "data/total.csv")
   .defer(d3.csv, "data/region_2.csv")
+  .defer(d3.csv, "data/world.csv")
   .await(load);
  
 
@@ -161,6 +165,10 @@ queue()
 			d3.select("button#Region").on("click", function(){
 				draw_line(dataRegion);
 			});
+
+			d3.select("button#World").on("click", function(){
+				draw_line(dataWorld);
+			})
 
 			
 

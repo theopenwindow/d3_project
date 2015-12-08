@@ -1,33 +1,33 @@
-			var width = 600;
-			var height = 450;
+			var widthScatter = 600;
+			var heightScatter = 450;
 
-			var margin = { top: 20, right: 10, bottom: 50, left: 80 };
+			var marginScatter = { top: 20, right: 10, bottom: 50, left: 80 };
 			var dotRadius = 4;
 
-			var xScale = d3.scale.linear()
-								.range([ margin.left, width - margin.right - margin.left])
+			var xScaleScatter = d3.scale.linear()
+								.range([ marginScatter.left, widthScatter - marginScatter.right - marginScatter.left])
 
-			var yScale = d3.scale.linear()
-								.range([ height - margin.bottom, margin.top ])
+			var yScaleScatter = d3.scale.linear()
+								.range([ heightScatter - marginScatter.bottom, marginScatter.top ])
 
-			var xAxis = d3.svg.axis()
-							.scale(xScale)
+			var xAxisScatter = d3.svg.axis()
+							.scale(xScaleScatter)
 							.orient("bottom")
 							.ticks(10);
 
-			var yAxis = d3.svg.axis()
-							.scale(yScale)
+			var yAxisScatter = d3.svg.axis()
+							.scale(yScaleScatter)
 							.orient("left");							
 		
-			var svg = d3.select("#page3_scatter")
+			var svgScatter = d3.select("#page3_scatter")
 						.append("svg")
-						.attr("width", width)
-						.attr("height", height);
+						.attr("width", widthScatter)
+						.attr("height", heightScatter);
 
-			var drawylabel = svg.append('text')
+			var drawylabel = svgScatter.append('text')
 								.attr("transform", "rotate(-90)")
-								.attr("x", -margin.top)
-								.attr("y", -margin.left + 103)
+								.attr("x", -marginScatter.top)
+								.attr("y", -marginScatter.left + 103)
 								.style("text-anchor", "end")
 								.attr("class","label");
 
@@ -35,14 +35,14 @@
 			d3.csv("data/scatter_data.csv", function(data) {
            
 
-            	xScale.domain(d3.extent(data, function(d){
+            	xScaleScatter.domain(d3.extent(data, function(d){
             			return + d.Year2015;
             		}));
-            	yScale.domain(d3.extent(data, function(d){
+            	yScaleScatter.domain(d3.extent(data, function(d){
             			return + d.literacy;
             		}));
 
-				var circles = svg.selectAll("circle")
+				var circlesScatter = svgScatter.selectAll("circle")
 							     .data(data)
 							     .enter()
 							     .append("circle")
@@ -50,47 +50,51 @@
 							     	return d.RegionCode;
 							     });
 
-				circles.attr("cx", function(d) {
-						return + xScale(+d.Year2015);
+				circlesScatter.attr("cx", function(d) {
+						return + xScaleScatter(+d.Year2015);
 					})
 					.attr("cy", function(d) {
-						return + yScale(+d.literacy);
+						return + yScaleScatter(+d.literacy);
 					})
 					.attr("r", dotRadius)
 					.style('cursor','pointer');
+
+				circlesScatter.filter(function(d){
+					return d == null;
+				}).remove();
 			
 
-				svg.append("g")
+				svgScatter.append("g")
 					.attr("class", "x axis")
-					.attr("transform", "translate(0," + (height - margin.bottom + 10) + ")")
-					.call(xAxis);
+					.attr("transform", "translate(0," + (heightScatter - marginScatter.bottom + 10) + ")")
+					.call(xAxisScatter);
 
-				svg.append("g")
+				svgScatter.append("g")
 					.attr("class", "y axis")
-					.attr("transform", "translate(" + (margin.left - 10) + ",0)")
-					.call(yAxis);
+					.attr("transform", "translate(" + (marginScatter.left - 10) + ",0)")
+					.call(yAxisScatter);
 
-				svg.append("text")
+				svgScatter.append("text")
 					.attr("class", "xlabel")
-					.attr("transform", "translate(" + (width / 2) + " ," +
-								(height-15) + ")")
+					.attr("transform", "translate(" + (widthScatter / 2) + " ," +
+								(heightScatter-15) + ")")
 					.style("text-anchor", "middle")
 					.attr("dy", "12")
 					.text("Under 5 Mortality Rate (per thousand births)")
 					.attr("font-family", "Open Sans");
 
-                var ylabel = svg.append("text")
+                var ylabel = svgScatter.append("text")
 					.attr("class", "ylabel")
-					.attr("y", margin.left/8 + 5)
-                    .attr("x", 0 - height/3 - 30 )
+					.attr("y", marginScatter.left/8 + 5)
+                    .attr("x", 0 - heightScatter/3 - 30 )
 					.style("text-anchor", "middle")
 					.attr("transform", "rotate(-90)")
 					.attr("font-family", "Open Sans");	
 
-				svg.select(".y.axis")
+				svgScatter.select(".y.axis")
 				   .transition()
 				   .duration(2000)
-				   .call(yAxis);
+				   .call(yAxisScatter);
 
 
 
@@ -101,21 +105,21 @@
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#GNI").classed("selected", true);
 
-                        yScale
+                        yScaleScatter
 						    .domain(d3.extent(data, function(d){
 							return + d.literacy;
             		        }));
 
 
-						circles
+						circlesScatter
 							.transition()
 							.duration(2000)
 							.attr("cx", function(d) {
-								return xScale(+d.Year2015);
+								return xScaleScatter(+d.Year2015);
 								// return the value to use for your x scale here
 							})
 							.attr("cy", function(d) {
-								return yScale(+d.literacy);
+								return yScaleScatter(+d.literacy);
 							})
 						});
 
@@ -125,24 +129,24 @@
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#GNI").classed("selected", true);
 
-                        yScale
+                        yScaleScatter
 						    .domain(d3.extent(data, function(d){
 							return + d.GNI;
             		        }));
-						svg.select(".y.axis")
+						svgScatter.select(".y.axis")
 						    .transition()
 						    .duration(2000)
-						    .call(yAxis);
+						    .call(yAxisScatter);
 
-						circles
+						circlesScatter
 							.transition()
 							.duration(2000)
 							.attr("cx", function(d) {
-								return xScale(+d.Year2015);
+								return xScaleScatter(+d.Year2015);
 								// return the value to use for your x scale here
 							})
 							.attr("cy", function(d) {
-								return yScale(+d.GNI);
+								return yScaleScatter(+d.GNI);
 							})
 						});
 
@@ -150,24 +154,24 @@
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#breastfeeding").classed("selected", true);
 
-                        yScale
+                        yScaleScatter
 						    .domain(d3.extent(data, function(d){
 							return + d.breastfeeding;
             		        }));
-						svg.select(".y.axis")
+						svgScatter.select(".y.axis")
 						    .transition()
 						    .duration(2000)
-						    .call(yAxis);
+						    .call(yAxisScatter);
 
-						circles
+						circlesScatter
 							.transition()
 							.duration(2000)
 							.attr("cx", function(d) {
-								return xScale(+d.Year2015);
+								return xScaleScatter(+d.Year2015);
 								// return the value to use for your x scale here
 							})
 							.attr("cy", function(d) {
-								return yScale(+d.breastfeeding);
+								return yScaleScatter(+d.breastfeeding);
 							})
 						});
 
@@ -175,24 +179,24 @@
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#water").classed("selected", true);
 
-                        yScale
+                        yScaleScatter
 						    .domain(d3.extent(data, function(d){
 							return + d.water;
             		        }));
-						svg.select(".y.axis")
+						svgScatter.select(".y.axis")
 						    .transition()
 						    .duration(2000)
-						    .call(yAxis);
+						    .call(yAxisScatter);
 
-						circles
+						circlesScatter
 							.transition()
 							.duration(2000)
 							/*.attr("cx", function(d) {
-								return xScale(+d.Year2015);
+								return xScaleScatter(+d.Year2015);
 								// return the value to use for your x scale here
 							})*/
 							.attr("cy", function(d) {
-								return yScale(+d.water);
+								return yScaleScatter(+d.water);
 							})
 						});
 
@@ -200,20 +204,20 @@
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#sanitation").classed("selected", true);
 
-                        yScale
+                        yScaleScatter
 						    .domain(d3.extent(data, function(d){
 							return + d.sanitation;
             		        }));
-						svg.select(".y.axis")
+						svgScatter.select(".y.axis")
 						    .transition()
 						    .duration(2000)
-						    .call(yAxis);
+						    .call(yAxisScatter);
 
-						circles
+						circlesScatter
 							.transition()
 							.duration(2000)
 							.attr("cy", function(d) {
-								return yScale(+d.sanitation);
+								return yScaleScatter(+d.sanitation);
 							})
 						});
 
@@ -221,20 +225,20 @@
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#birth").classed("selected", true);
 
-                        yScale
+                        yScaleScatter
 						    .domain(d3.extent(data, function(d){
 							return + d.birth;
             		        }));
-						svg.select(".y.axis")
+						svgScatter.select(".y.axis")
 						    .transition()
 						    .duration(2000)
-						    .call(yAxis);
+						    .call(yAxisScatter);
 
-						circles
+						circlesScatter
 							.transition()
 							.duration(2000)
 							.attr("cy", function(d) {
-								return yScale(+d.birth);
+								return yScaleScatter(+d.birth);
 							})
 						});
 
@@ -259,3 +263,5 @@ $(document).ready(function() {
 });
 
 })
+
+

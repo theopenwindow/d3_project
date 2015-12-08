@@ -1,14 +1,14 @@
 var regions = { "SAS": "South Asia" , "ECS": "Europe and Central Asia", "MEA": "Middle East & North Africa", "SSF": "Sub-Saharan Africa", "LCN": "Latin America & Caribbean", "EAS": "East Asia &amp; Pacific", "NAC": "North America" },
     w = 550,
     h = 400,
-    margin = 30,
+    page3margin = 30,
     startYear = 1960, 
     endYear = 2015,
     startu5mr = 0,
     endu5mr = 443.5,
     years = d3.range(startYear, endYear + 1),
-    y = d3.scale.linear().domain([endu5mr, startu5mr]).range([0 + margin, h - margin]),
-    x = d3.scale.linear().domain([1960, 2015]).range([0 + margin -5, w]);
+    y = d3.scale.linear().domain([endu5mr, startu5mr]).range([0 + page3margin, h - page3margin]),
+    x = d3.scale.linear().domain([1960, 2015]).range([0 + page3margin -5, w]);
 
 var vis = d3.select("#vis")
     .append("svg")

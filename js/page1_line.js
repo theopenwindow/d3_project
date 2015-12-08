@@ -1,46 +1,42 @@
-			var width = 600;
+			var width = 500;
 			var height = 500;
-			var margin = {top: 20, right: 80, bottom: 40, left:0};
+			var margin = {top: 20, right: 20, bottom: 20, left:20};
 
 			var myWidth = width - margin.right - margin.left;
 			var myHeight = height - margin.top - margin.bottom;
 
 
-			var dateFormat = d3.time.format("%Y");
-			var xScale = d3.time.scale()
+			var page1dateFormat = d3.time.format("%Y");
+			var page1xScale = d3.time.scale()
 								.range([ margin.left, width - margin.right]);
 
-			var yScale = d3.scale.linear()
+			var page1yScale = d3.scale.linear()
 								.range([ margin.top, height - margin.bottom ]);
 
-			var xAxis = d3.svg.axis()
-							.scale(xScale)
+			var page1xAxis = d3.svg.axis()
+							.scale(page1xScale)
 							.tickSize(-myHeight)
 							.orient("bottom")
 							.ticks(8)
 							.tickFormat(function(d) {
-								return dateFormat(d);
+								return page1dateFormat(d);
 							})
 							.outerTickSize([0]);
 
-			var yAxis = d3.svg.axis()
-							.scale(yScale)
+			var page1yAxis = d3.svg.axis()
+							.scale(page1yScale)
 							.tickSize(myWidth)
 							.orient("right")
 							.outerTickSize([0])
 							.ticks(5);
 
-			var line = d3.svg.line()
+			var myLine = d3.svg.line()
 				.x(function(d) {
-					return xScale(dateFormat.parse(d.year));
+					return page1xScale(page1dateFormat.parse(d.year));
 				})
 				.y(function(d) {
-					return yScale(+d.amount);
+					return page1yScale(+d.amount);
 				});
-
-			var tooltip = d3.select("body")
-      	                    .append("div")
-      	                    .attr("class", "tooltip");
 
 
 			//Create the empty SVG image
@@ -52,23 +48,16 @@
 
 
 			d3.csv("data/total.csv", function(data) {
-
-
-
-				var years = ["1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"];
+				var page1years = ["1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"];
 
 				// or 
-
 				// var years = d3.keys(data[0]).slice(0, 54-4); //
 
 				var dataset = [];
 
 				data.forEach(function (d, i) {
-
 					var themortality = [];
-
-					years.forEach(function (y) {
-
+					page1years.forEach(function (y) {
 						if (d[y]) {
 							themortality.push({
 								country: d.CountryName,
@@ -76,71 +65,106 @@
 								amount: d[y]  
  							});
 						}
-
 					});
-
 					dataset.push( {
 						country: d.CountryName,
 						mortality: themortality  
 						} );
-
 				});
 
 				//console.log(data);
-
 				//console.log(dataset);
 
 
-				xScale.domain(
-					d3.extent(years, function(d) {
-						return dateFormat.parse(d);
+				page1xScale.domain(
+					d3.extent(page1years, function(d) {
+						return page1dateFormat.parse(d);
 					}));
 
 				var world = dataset.filter(function (f){return f.country == "World"})[0];
 				console.log(world);
 
-				yScale.domain([
+				page1yScale.domain([
 					d3.max(world.mortality, function(d) {
 							return +d.amount;
 						}),
 					0
 				]);
 
-
-				var groups = svgLine.selectAll("g")
-									.datum(world)
+				var groups = svgLine.datum(world)
 									.append("g")
 									.attr("id", function(d){
 											return d.country;
 										})
 									.attr("class", "lines");
 
-
 				groups.selectAll("path")
 						.data(function(d) { 
-							//console.log(d.mortality);
 							return [d.mortality]; 
 						})
 						.enter()
 						.append("path")
 						.attr("class", "line")
-						.attr("d", line)
+						.attr("d", function(d){
+							return myLine(d);
+						})
 						.style('cursor','pointer');
 
-				svgLine.append("path")
 				//Axes
 				svgLine.append("g")
 					.attr("class", "x axis")
 					.attr("transform", "translate(0," + (height - margin.bottom) + ")")
-					.call(xAxis);
+					.call(page1xAxis);
 
 				svgLine.append("g")
 					.attr("class", "y axis")
 					.attr("transform", "translate(" + margin.left + ",0)")
-					.call(yAxis);
+					.call(page1yAxis);
+
+					var groups2 = svgLine.selectAll("g")
+										.data(dataset)
+										.enter()
+										.append("g")
+										.attr("id", function(d){
+												return d.country;
+											})
+										.attr("class", "lines");
+			
+
+			
+			d3.select("button#Country").on("click", function(){
+
+					page1yScale.domain([
+						d3.max(dataset, function(d) {
+							return d3.max(d.mortality, function(d) {
+								return +d.amount;
+							});
+						}),
+						0
+					]);
+
+					svgLine.select(".y.axis")
+						   .transition()
+						   .duration(2000)
+						   .call(page1yAxis);
 
 
+					groups2.selectAll("path")
+							.data(function(d) { 
+								return [d.mortality]; 
+							})
+							.enter()
+							.append("path")
+							.transition()
+						    .duration(2000)
+							.attr("class", "line")
+							.attr("d", function(d){
+								return myLine(d);
+							})
+							.style('cursor','pointer');
+				
+				})
+
+	});
 
 
-
-			});

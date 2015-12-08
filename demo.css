@@ -82,19 +82,15 @@ section {
 path.line {
         fill: none;
         stroke: #999999;
-                stroke-opacity: 40%;
+        stroke-opacity: 40%;
         stroke-width: 0.8px;
       }
 
-.axis path {
-        display: none;
-      }
 .axis line {
         fill: none;
         stroke: white;
         stroke-width: 1px;
       }
-
 
 .axis text {
         font-family: sans-serif;
@@ -106,10 +102,6 @@ path.line {
         fill: #A8ADAD;
       }
 
-.rectangle {
-        fill: #E1EAED;
-        fill-opacity: 0.5;
-      }
 
 /*************************page1_map********************************/
 .unfocused{
@@ -232,15 +224,13 @@ text {
         stroke-width: 1px;
       }
 
-      circle {
+       circle {
         fill: #0099FF;
         fill-opacity: 70%;
         stroke: white;
         stroke-width: 0.5px;
         stroke-opacity: 80%;
       }
-
-
 
       .axis text {
         font-family: 'Open Sans', sans-serif;
@@ -285,3 +275,8 @@ text {
       .btn-group {
         padding-top: 20px;
       } 
+
+      circle.current, circle.highlight.current {
+    stroke: #000;
+    stroke-width: 1.7;
+} 

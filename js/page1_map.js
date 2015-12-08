@@ -1,6 +1,3 @@
-var width = 600,
-    height = 550;
-
 var map = d3.select('#page1_map').append('svg')
     .attr('width', width)
     .attr('height', height);
@@ -28,7 +25,7 @@ queue()
 function typeAndSet(d) {
     d.Year2015 = +d.Year2015;
     countryById.set(d.ISO, d);
-    console.log(countryById.set(d.ISO, d));
+    //console.log(countryById.set(d.ISO, d));
     return d;
 }
 
@@ -43,7 +40,7 @@ function getColor(d) {
     }
 }
 
-select("button#Region").on("click",function(){
+d3.select("button#Region").on("click",function(){
 
     function typeAndSet(d) {
         d.Region2015 = +d.Region2015;
@@ -62,7 +59,17 @@ select("button#Region").on("click",function(){
         }
     }
 
+    redraw();
 })
+
+function redraw() {
+
+    svg.selectAll("path.countries")
+        .transition()
+        .attr("fill", function(d,i) {
+            return getColor(d); 
+        });
+}
 
 
 function loaded(error, countries, mortality) {
@@ -81,10 +88,9 @@ function loaded(error, countries, mortality) {
         .attr('class', 'countries')
         .attr('d', path)
         .attr('fill', function(d,i) {
-            //console.log(d);
-            //console.log(d.properties.name);
             return getColor(d);
                     });
+
 
 
     var linear = colorScale;

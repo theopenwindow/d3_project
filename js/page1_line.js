@@ -1,7 +1,10 @@
 //draw Line Chart:
-			var width = 500;
-			var height = 500;
-			var margin = {top: 20, right: 20, bottom: 20, left:20};
+			var width = 600;
+			var height = 450;
+			var margin = {top: 20, right: 40, bottom: 30, left:20};
+			// var width = 80%,
+			//  height = 80%;
+			// var margin = {top:10%, right:10%, bottom: 10%, left:10%};
 
 			var myWidth = width - margin.right - margin.left;
 			var myHeight = height - margin.top - margin.bottom;
@@ -64,7 +67,7 @@
 			function draw_line(data){
 //restructure new dataset:
 				var dataset = [];
-				data.forEach(function (d, i) {
+				data.forEach(function (d) {
 					var themortality = [];
 					page1years.forEach(function (y) {
 						if (d[y]) {
@@ -78,7 +81,7 @@
 					dataset.push({
 						country: d.CountryName,
 						mortality: themortality  
-						} );
+						});
 				});
 
 				console.log(dataset);
@@ -97,29 +100,37 @@
 					0
 				]);
 //draw lines:
-				var groups = svgLine.selectAll("g")
-					.data(dataset)
+
+			d3.selectAll("g.lines").remove();
+
+				var groups = svgLine.selectAll("g.lines")
+					.data(dataset, function(d) {
+						return d.country;
+					})
 					.enter()
 					.append("g")
 					.attr("class", "lines");
 
 				var paths = groups.selectAll("path")
 									.data(function(d) {
-										console.log(d.mortality);
+										//console.log(d.mortality);
 										return [ d.mortality ]; 
 									});
 //update data to lines:
 				paths.enter()
 				     .append("path")
-				     .transition()
-				     .duration(2000)
-				     .attr("d",myLine);
+				     .attr("d",myLine)
+				     .style("opacity", 0);
 
 				paths.exit()
 					  .transition()
 					  .duration(2000)
 					  .style("opacity", 0)
 					  .remove();
+
+				paths.transition()
+				     .duration(2000)
+				     .style("opacity", 1);
 
 			    svgLine.select(".y.axis")
 					   .transition()
@@ -131,6 +142,7 @@
 					   .duration(2000)
 					   .call(page1xAxis);
 			};
+
 
 //load data:			
  			var dataCountry = [];
@@ -148,8 +160,24 @@
 					dataRegion = dataset2;
 					dataWorld = dataset3;
 
-				}
-			};
+			draw_line(dataWorld);
+
+		    d3.select("button#Country").on("click", function(){
+				draw_line(dataCountry);
+				map_redraw("Country");
+			});
+
+			d3.select("button#Region").on("click", function(){
+				draw_line(dataRegion);
+				map_redraw("Region");
+			});
+
+			d3.select("button#World").on("click", function(){
+				draw_line(dataWorld);
+				map_redraw("World");
+			});
+	   }};
+
 
 queue()
   .defer(d3.csv, "data/total.csv")
@@ -158,17 +186,7 @@ queue()
   .await(load);
  
 
-			d3.select("button#Country").on("click", function(){
-				draw_line(dataCountry);
-			});
 
-			d3.select("button#Region").on("click", function(){
-				draw_line(dataRegion);
-			});
-
-			d3.select("button#World").on("click", function(){
-				draw_line(dataWorld);
-			})
 
 			
 

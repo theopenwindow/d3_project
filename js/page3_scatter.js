@@ -1,7 +1,7 @@
-			var widthScatter = 600;
-			var heightScatter = 450;
+			var widthScatter = 500;
+			var heightScatter = 400;
 
-			var marginScatter = { top: 20, right: 10, bottom: 50, left: 80 };
+			var marginScatter = { top: 20, right: 10, bottom: 50, left: 45 };
 			var dotRadius = 4;
 
 			var xScaleScatter = d3.scale.linear()
@@ -48,7 +48,9 @@
 							     .append("circle")
 							     .attr("class", function(d){
 							     	return d.RegionCode;
-							     });
+							     })
+							     .attr("fill", "#0099FF")
+							     .attr("fill-opacity", "0.3");
 
 				circlesScatter.attr("cx", function(d) {
 						return + xScaleScatter(+d.Year2015);
@@ -60,7 +62,8 @@
 					.style('cursor','pointer');
 
 				circlesScatter.filter(function(d){
-					return d == null;
+					return "d.cy" == null;
+					console.log(d);
 				}).remove();
 			
 

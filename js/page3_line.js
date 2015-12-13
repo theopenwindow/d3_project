@@ -1,5 +1,5 @@
 var regions = { "SAS": "South Asia" , "ECS": "Europe and Central Asia", "MEA": "Middle East & North Africa", "SSF": "Sub-Saharan Africa", "LCN": "Latin America & Caribbean", "EAS": "East Asia &amp; Pacific", "NAC": "North America" },
-    w = 550,
+    w = 400,
     h = 400,
     page3margin = 30,
     startYear = 1960, 
@@ -130,36 +130,36 @@ function onclick(d, i) {
     }
 }
 
-function onmouseover(d, i) {
-    var currClass = d3.select(this).attr("class");
-    d3.select(this)
-        .attr("class", currClass + " current");
+// function onmouseover(d, i) {
+//     var currClass = d3.select(this).attr("class");
+//     d3.select(this)
+//         .attr("class", currClass + " current");
     
-    var countryCode = $(this).attr("country");
-    var countryVals = startEnd[countryCode];
-    var percentChange = 100 * (countryVals['endVal'] - countryVals['startVal']) / countryVals['startVal'];
+//     var countryCode = $(this).attr("country");
+//     var countryVals = startEnd[countryCode];
+//     var percentChange = 100 * (countryVals['endVal'] - countryVals['startVal']) / countryVals['startVal'];
     
-    var blurb = '<h2>' + countryCodes[countryCode] + '</h2>';
-    blurb += "<p>On average: a life expectancy of " + Math.round(countryVals['startVal']) + " years in " + countryVals['startYear'] + " and " + Math.round(countryVals['endVal']) + " years in " + countryVals['endYear'] + ", ";
-    if (percentChange >= 0) {
-        blurb += "an increase of " + Math.round(percentChange) + " percent."
-    } else {
-        blurb += "a decrease of " + -1 * Math.round(percentChange) + " percent."
-    }
-    blurb += "</p>";
+//     var blurb = '<h2>' + countryCodes[countryCode] + '</h2>';
+//     blurb += "<p>On average: the under five mortality rate of " + Math.round(countryVals['startVal']) + " per thousand births in " + countryVals['startYear'] + " and " + Math.round(countryVals['endVal']) + " per thousand births in " + countryVals['endYear'] + ", ";
+//     if (percentChange >= 0) {
+//         blurb += "an increase of " + Math.round(percentChange) + " percent."
+//     } else {
+//         blurb += "a decrease of " + -1 * Math.round(percentChange) + " percent."
+//     }
+//     blurb += "</p>";
     
-    $("#default-blurb").hide();
-    $("#blurb-content").html(blurb);
-}
-function onmouseout(d, i) {
-    var currClass = d3.select(this).attr("class");
-    var prevClass = currClass.substring(0, currClass.length-8);
-    d3.select(this)
-        .attr("class", prevClass);
-    // $("#blurb").text("hi again");
-    $("#default-blurb").show();
-    $("#blurb-content").html('');
-}
+//     $("#default-blurb").hide();
+//     $("#blurb-content").html(blurb);
+// }
+// function onmouseout(d, i) {
+//     var currClass = d3.select(this).attr("class");
+//     var prevClass = currClass.substring(0, currClass.length-8);
+//     d3.select(this)
+//         .attr("class", prevClass);
+//     // $("#blurb").text("hi again");
+//     $("#default-blurb").show();
+//     $("#blurb-content").html('');
+// }
 
 function showRegion(regionCode) {
     var countries = d3.selectAll("path."+regionCode);

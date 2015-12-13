@@ -36,7 +36,7 @@ h4 code {
 }
 
 /* Outline button for use within the docs */
-.btn-outline {
+/*.btn-outline {
   color: #563d7c;
   background-color: transparent;
   border-color: #563d7c;
@@ -50,7 +50,7 @@ h4 code {
 }
 
 /* Inverted outline button (white on dark) */
-.btn-outline-inverse {
+/*.btn-outline-inverse {
   color: #fff;
   background-color: transparent;
   border-color: #cdbfe3;
@@ -62,7 +62,7 @@ h4 code {
   text-shadow: none;
   background-color: #fff;
   border-color: #fff;
-}
+}*/
 
 /* Bootstrap "B" icon */
 .bs-docs-booticon {
@@ -856,14 +856,14 @@ h1[id] {
 .show-grid {
   margin-bottom: 15px;
 }
-.show-grid [class^="col-"] {
+/*.show-grid [class^="col-"] {
   padding-top: 10px;
   padding-bottom: 10px;
   background-color: #eee;
   background-color: rgba(86,61,124,.15);
   border: 1px solid #ddd;
   border: 1px solid rgba(86,61,124,.2);
-}
+}*/
 
 
 /*

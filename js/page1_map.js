@@ -1,12 +1,14 @@
+var height_map = 375;
+
 var map = d3.select('#page1_map').append('svg')
     .attr('width', width)
-    .attr('height', height);
+    .attr('height', height_map);
 
 var projection = d3.geo.mercator()
-    .center([15, -50])
+    .center([20, -50])
 
-    .scale(90) // mess with this if you want
-    .translate([width / 2, 450]);
+    .scale(80) // mess with this if you want
+    .translate([width / 2, 340]);
 
 var path = d3.geo.path()
     .projection(projection);
@@ -25,57 +27,59 @@ queue()
 function typeAndSet(d) {
     d.Year2015 = +d.Year2015;
     countryById.set(d.ISO, d);
+    d.Region2015 = +d.Region2015;
     //console.log(countryById.set(d.ISO, d));
     return d;
 }
 
+
 function getColor(d) {
     var dataRow = countryById.get(d.id);
     if (dataRow) {
-      //  console.log(dataRow.Year2015);
         return colorScale(dataRow.Year2015);
     } else {
-        //console.log("no dataRow", d);
         return "#ccc";
     }
 }
 
-d3.select("button#Region").on("click",function(){
 
-    function typeAndSet(d) {
-        d.Region2015 = +d.Region2015;
-        countryById.set(d.ISO, d);
-        console.log(countryById.set(d.ISO, d));
-        return d;
-    }
-
-    function getColor(d) {
+function getRegionColor(d) {
         var dataRow = countryById.get(d.id);
         if (dataRow) {
             return colorScale(dataRow.Region2015);
         } else {
-            //console.log("no dataRow", d);
             return "#ccc";
         }
+}
+
+function getWorldColor(d) {
+    return "rgb(158, 193, 243)";
+
+}
+
+function map_redraw(buttonCase) {
+
+    var colorFunction;
+
+    if (buttonCase === "World") {
+        colorFunction = getWorldColor;
     }
-
-    redraw();
-})
-
-function redraw() {
+    if (buttonCase === "Region") {
+        colorFunction = getRegionColor;
+    }
+    if (buttonCase === "Country") {
+        colorFunction = getColor;
+    }
 
     map.selectAll("path.countries")
         .transition()
         .attr("fill", function(d,i) {
-            return getColor(d); 
+            return colorFunction(d); 
         });
 }
 
 
 function loaded(error, countries, mortality) {
-
-    //console.log(countries);
-    //console.log(mortality);
 
     colorScale.domain(d3.extent(mortality, function(d) {return d.Year2015;}));
 
@@ -88,7 +92,7 @@ function loaded(error, countries, mortality) {
         .attr('class', 'countries')
         .attr('d', path)
         .attr('fill', function(d,i) {
-            return getColor(d);
+            return getWorldColor(d);
                     });
 
 
@@ -97,7 +101,7 @@ function loaded(error, countries, mortality) {
 
     map.append("g")
       .attr("class", "legendLinear")
-      .attr("transform", "translate(20,20)");
+      .attr("transform", "translate(430,340)");
 
     var legendLinear = d3.legend.color()
       .shapeWidth(30)
@@ -110,3 +114,9 @@ function loaded(error, countries, mortality) {
   
 
 }
+
+//make the button for world look selected when the page loads.
+//             draw_line(dataWorld);
+//             map_redraw("World");
+//             d3.select("button#World").classed("selected", true);
+

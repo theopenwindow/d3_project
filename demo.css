@@ -11,12 +11,16 @@ body {
   background: black;
 }
 
+
 h1{
   color: white;
   text-align: center;
   padding-top: 250px;
   margin: 0;
+}
 
+h2{
+  padding-left: 20px;
 }
 
 .main-nav,
@@ -43,54 +47,32 @@ header,
   column-gap: 40px;
 }
 
-section {
-    min-height:100%;
-    width: 100%;
-}
-#arrow {
-    position:fixed; 
-    right:50%; 
-}
-#arrow a{
-    padding:10px 20px;
-    cursor:pointer;
-}
 
-.previous {
-      position:fixed; 
-      top:10%;
-      width: 0; 
-      height: 0; 
-      border-left: 10px transparent;
-      border-right: 10px transparent;
-      border-bottom: 10px solid black;
-}
-
-.next {
-    position:fixed; 
-    top:95%;
-    width: 0; 
-    width: 0; 
-    height: 0; 
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid black;
-}
 
 /*************************page1_line********************************/
 
 path.line {
         fill: none;
-        stroke: #999999;
-        stroke-opacity: 40%;
-        stroke-width: 0.8px;
-      }
-
-.axis line {
-        fill: none;
         stroke: white;
         stroke-width: 1px;
       }
+
+/*g .axis{
+        fill: none;
+        stroke: white;
+        stroke-width: 0.4px;
+}*/
+
+.tick {
+  opacity: 0.5;
+}
+
+#page1_line g path {
+  stroke: black;
+  fill: none;
+}
+
+
 
 .axis text {
         font-family: sans-serif;
@@ -98,12 +80,17 @@ path.line {
         fill: #A8ADAD;
       }
 
+
 .label {
         fill: #A8ADAD;
       }
 
 
 /*************************page1_map********************************/
+#page1_text{
+  padding-top: 20px;
+}
+
 .unfocused{
                 fill-opacity: 30%;
             }
@@ -128,6 +115,10 @@ path.line {
     font-size: 9px;
 }
 
+g.legendCells {
+  margin-top: 200px;
+}
+
 .tooltip {
                 position: absolute;
                 z-index: 10;
@@ -140,96 +131,74 @@ path.line {
                 font-size: 80%
             }
 
-/*************************vis********************************/
+/*************************page2 time line********************************/
 
-a { color: #821122; }
-#content {
-    width: 925px;
-    margin: 0 auto;
-}
-#filters {
-    margin-bottom: 20px;
-}
-#filters a {
-    color: #000;
-    font-size: 12px;
-    padding: 5px;
-    background: #e2e2e2;
-    cursor: pointer;
-    margin-right: 3px;
-}
-#filters a:last-child {
-    margin-right: 0;
-}
-#filters a.SAS { background: #895881; color: #fff; }
-#filters a.ECS { background: #ED7C31; color: #fff; }
-#filters a.MEA { background: #82A5C0; color: #fff; }
-#filters a.SSF { background: #6E9E75; color: #fff; }
-#filters a.LCN { background: #00BBD6; color: #fff; }
-#filters a.EAS { background: #e25f82; color: #fff; }
-#filters a.NAC { background: #be1932; color: #fff; }
-
-#vis {
-    min-height: 550px;
-}
-
-
-g path {
-    stroke: #e2e2e2;
-    stroke-width: 0.9;
-    fill: none;
-}
-g path.current, g path.highlight.current {
-    stroke: #000;
-    stroke-width: 1.7;
-}
-.SAS.highlight { stroke: #895881; }
-.ECS.highlight { stroke: #ED7C31; }
-.MEA.highlight { stroke: #82A5C0; }
-.SSF.highlight { stroke: #6E9E75; }
-.LCN.highlight { stroke: #00BBD6; }
-.EAS.highlight { stroke: #e25f82; }
-.NAC.highlight { stroke: #be1932; }
-.highlight { stroke-width: 1px; } 
-
-line {
-    stroke: black;
-}
-
-text {
-    font-size: 11px;
-.axis {
-    stroke-width: 0.8;
-    stroke: #000;
-}
- .xTicks, .yTicks {
-    stroke-width: 0.6;
-    stroke: #000;
-}
-
-/*************************scatter plot********************************/
-
-      .selected {
-        background-color: steelblue;
+      .line.normal {
+        stroke: gray;
       }
 
-      svg {
-        background-color: white;
+      .line.unfocused{
+        stroke-opacity: 40%;
+      }
+
+      .line.focused {
+        stroke-width: 2px;
+        stroke-opacity: 100%;
+        stroke: rgb(158, 193, 243);
+      }
+
+      .selected {
+        box-shadow: 0px 1px 16px #666666;
+      }
+
+      .reveal {
+        color: grey;
+        background-color: #f2f2e8;
+        border-top: transparent;
+        border-right: transparent;
+        border-left: 5px solid grey;
+        border-bottom: grey;
+        text-shadow:3px 2px 1px rgb(158, 193, 243);
+        margin-top: 5px;
+        margin-right: 100;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-left: 50px;
+      }
+
+      #page2_text {
+        margin-top: 100;
+      }
+
+/************************* page3 scatter plot********************************/
+
+
+      #Country,#Region, #World, #literacy, #GNI, #breastfeeding, #water, #sanitation, #birth {
+        color: grey;
+        background-color: #f2f2e8;
+        border-top: transparent;
+        border-right: transparent;
+        border-left: 5px solid grey;
+        border-bottom: grey;
+        text-shadow:3px 2px 1px rgb(158, 193, 243);
+        margin-top: 5px;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-left: 50px;
       }
 
       .axis path,
       .axis line {
         fill: none;
-        stroke: #ccc;
-        stroke-width: 1px;
+        stroke: black;
+        stroke-width: 0.8px;
       }
 
        circle {
         fill: #0099FF;
         fill-opacity: 70%;
         stroke: white;
-        stroke-width: 0.5px;
-        stroke-opacity: 80%;
+        stroke-width: 1px;
       }
 
       .axis text {
@@ -269,14 +238,96 @@ text {
       /* this is an adjustment to bootstrap's row for my page */
       .row {
         padding-top: 50px;
+        padding-left: 50px;
       }
 
-      /* this is an adjustment to bootstrap for my page */
-      .btn-group {
-        padding-top: 20px;
-      } 
+      /* this is an adsjustment to bootstrap for my page */
 
       circle.current, circle.highlight.current {
     stroke: #000;
     stroke-width: 1.7;
 } 
+
+#page3_paragraph {
+  padding-left: 40px;
+    padding-top:40px;
+  padding-right: 40px;
+}
+
+
+
+/************************* page3 Line ********************************/
+
+/*a { color: #821122; }
+*//*#content {
+    width: 925px;
+    margin: 0 auto;
+}*/
+#filters {
+    margin-bottom: 20px;
+}
+#filters a {
+        color: grey;
+        background-color: #f2f2e8;
+        border-top: transparent;
+        border-right: transparent;
+        border-left: 5px solid grey;
+        border-bottom: grey;
+        text-shadow:2px 1px 1px rgb(158, 193, 243);
+        margin-top: 5px;
+        padding: 0 6px 0 6px;
+        cursor: pointer;
+}
+
+#region_btn {
+  padding: 0;
+}
+/*#filters a:last-child {
+    margin-right: 0;
+}*/
+#filters a.SAS { background: #895881; color: #fff; }
+#filters a.ECS { background: #ED7C31; color: #fff; }
+#filters a.MEA { background: #82A5C0; color: #fff; }
+#filters a.SSF { background: #6E9E75; color: #fff; }
+#filters a.LCN { background: #00BBD6; color: #fff; }
+#filters a.EAS { background: #e25f82; color: #fff; }
+#filters a.NAC { background: #be1932; color: #fff; }
+
+#vis {
+    min-height: 550px;
+}
+
+
+g path {
+    stroke: white;
+    stroke-width: 0.9;
+    fill: none;
+}
+g path.current, g path.highlight.current {
+    stroke: #000;
+    stroke-width: 1.7;
+}
+.SAS.highlight { stroke: #895881; }
+.ECS.highlight { stroke: #ED7C31; }
+.MEA.highlight { stroke: #82A5C0; }
+.SSF.highlight { stroke: #6E9E75; }
+.LCN.highlight { stroke: #00BBD6; }
+.EAS.highlight { stroke: #e25f82; }
+.NAC.highlight { stroke: #be1932; }
+.highlight { stroke-width: 2px; } 
+
+line {
+    stroke: black;
+}
+
+text {
+    font-size: 11px;
+.axis {
+    stroke-width: 0.8;
+    stroke: #000;
+}
+ .xTicks, .yTicks {
+    stroke-width: 0.6;
+    stroke: #000;
+}
+

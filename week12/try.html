@@ -1,0 +1,366 @@
+<html>
+	<head>
+		<style type="text/css">
+			.axis path,
+			.axis line {
+			  fill: none;
+			  stroke-width: 1px;
+			  shape-rendering: crispEdges;
+			}
+
+			path.line {
+			  fill: none;
+			  stroke-width: 1px;
+			  stroke-opacity: 80%;
+			}
+
+			.line.normal {
+			  stroke: gray;
+			}
+
+			.line.unfocused{
+			  stroke-opacity: 40%;
+			}
+
+			.line.focused {
+			  stroke-width: 2px;
+			  stroke-opacity: 100%;
+			  stroke: orange;
+			}
+
+			.button {
+			      position:fixed; 
+			      top:5%;
+			      z-index: 2000;
+			      vertical-align: baseline;
+
+			}
+		</style>
+	</head>
+
+<!--	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://d3js.org/queue.v1.min.js"></script>-->
+	<script type="text/javascript" src="d3/d3.js"></script>
+	<script type="text/javascript" src="d3/d3.min.js"></script>
+	<script type="text/javascript" src="d3/queue.js"></script>
+	<script type="text/javascript" src="d3/jquery-1.9.1.min.js"></script>
+	
+	<body>
+		<div class="button">
+
+		  <button class="reveal" id="Haiti">Haiti</button>
+		  <div class="toggle_container">
+			  <div class="block"> Year 2010. HaitiEarthquake. Death toll: 100,000 - 316,000.</div>
+		  </div>
+
+		  <button class="reveal" id="Myanmar">Myanmar</button>
+		  <div class="toggle_container">
+			  <div class="block">Year 2008. Cyclone Bargis. 84,500 people were killed and 53,800 went missing.</div>
+		  </div>
+
+		  <button class="reveal" id="Tajikistan">Tajikistan</button>
+		  <div class="toggle_container">
+			  <div class="block">Year 1992. The Tajik Civil War(lastting 6years).
+			  </div>
+		  </div>
+
+		  <button class="reveal" id="Korea">Korea Dem Rep</button>
+		  <div class="toggle_container">
+			  <div class="block">Year 1994. North Korean famine(lasting four years). Children, especially those under two years old, were the most affected by the famine and poverty of the period.
+			  </div>
+		  </div>
+
+		  <button class="reveal" id="Indonesia">Indonesia</button>
+		  <div class="toggle_container">
+			  <div class="block">Year 2004. Indian Ocean earth quake and tsunami. 227,898 people died.
+			  </div>
+		  </div>
+
+		  <button class="reveal" id="Armenia">Armenia</button>
+		  <div class="toggle_container">
+			  <div class="block">Year 1988. Spitak earthquake. 
+			  </div>
+		  </div>
+
+		  <button class="reveal" id="Nicaragua">Nicaragua</button>
+		  <div class="toggle_container">
+			  <div class="block">Year 1998. Hurricane Mitch. 
+			  </div>
+		  </div>
+
+		  <button class="reveal" id="Honduras">Honduras</button>
+		  <div class="toggle_container">
+			  <div class="block">Year 1998. Hurricane Mitch.</div>
+		  </div>
+
+		  <button class="reveal" id="Samoa">Samoa</button>
+		  <div class="toggle_container">
+			  <div class="block">Year 2009.  8.1 Mw submarine earthquake and tsunami.
+			  </div>
+		  </div>
+
+		  <button class="reveal" id="Venezuela">Venezuela,RB</button>
+		  <div class="toggle_container">
+			  <div class="block">Year 1999. Vargas tragedy. Death toll: 10,000 - 30,000.</div>
+		  </div>
+		</div>
+		<div id="page1_timeline"></div>
+		
+	</body>
+	<script type="text/javascript">
+			var margin = {
+			    top: 50,
+			    right: 10,
+			    bottom: 70,
+			    left: 70
+			    };
+
+			    var width = 850;
+			    var height = 500;
+
+
+			    //Set up date formatting and years
+			    var dateFormat = d3.time.format("%Y");
+
+			    //Set up scales
+			    var xScale = d3.time.scale()
+			    .range([margin.left, width - margin.right - margin.left]);
+
+			    var yScale = d3.scale.linear()
+			    .range([margin.top, height - margin.bottom]);
+
+			    //Configure axis generators
+			    var xAxis = d3.svg.axis()
+			    .scale(xScale)
+			    .orient("bottom")
+			    .ticks(15)
+			    .tickFormat(function (d) {
+			        return dateFormat(d);
+			    })
+			    .innerTickSize(0);
+
+			    var yAxis = d3.svg.axis()
+			    .scale(yScale)
+			    .orient("left")
+			    .innerTickSize(0);
+
+			    //Configure line generator
+			    // each line dataset must have a d.year and a d.rate for this to work.
+			    var line = d3.svg.line()
+			    .x(function (d) {
+			        return xScale(dateFormat.parse(d.year));
+			    })
+			    .y(function (d) {
+			        return yScale(+d.rate);
+			    });
+
+
+			    //Create the empty SVG image
+			    var svg = d3.select("#page2_timeline")
+			    .append("svg")
+			    .attr("width", width)
+			    .attr("height", height);
+
+
+			function draw_lines(data) {
+
+			    var years = d3.keys(data[0]).slice(1, 55); //
+			    console.log(years);
+
+			    //Create a new, empty array to hold our restructured dataset
+			    var dataset = [];
+
+			    //Loop once for each row in data
+			    data.forEach(function (d, i) {
+
+			        var IMRs = [];
+
+			        years.forEach(function (y) { //Loop through all the years - and get the rates for this data element
+
+			            if (d[y]) { /// What we are checking is if the "y" value - the year string from our array, which would translate to a column in our csv file - is empty or not.
+
+			                IMRs.push({ //Add a new object to the new rates data array - for year, rate. These are OBJECTS that we are pushing onto the array
+			                    year: y,
+			                    rate: d[y], // this is the value for, for example, d["2004"]
+			                    Country: d.Country
+			                });
+			            }
+
+			        });
+			        dataset.push({ // At this point we are accessing one index of data from our original csv "data", above and we have created an array of year and rate data from this index. We then create a new object with the Country value from this index and the array that we have made from this index.
+			            country: d.Country,
+			            rates: IMRs // we just built this from the current index.
+			        });
+
+			    });
+
+			    //Uncomment to log the original data to the console
+			    //console.log(data);
+
+			    //Uncomment to log the newly restructured dataset to the console
+			    console.log(dataset);
+
+
+			    //Set scale domains - max and min of the years
+			    xScale.domain(
+			        d3.extent(years, function (d) {
+			            return dateFormat.parse(d);
+			        }));
+
+			    // max of rates to 0 (reversed, remember)
+			    yScale.domain([
+			        d3.max(dataset, function (d) {
+			            return d3.max(d.rates, function (d) {
+			                return +d.rate;
+			            });
+			        }),
+			        0
+			    ]);
+
+
+			    //Make a group for each country
+			    var groups = svg.selectAll("g.lines")
+			        .data(dataset)
+			        .enter()
+			        .append("g")
+			        .attr("class", "lines")
+			        .attr("id", function (d) {
+			            return d.country.replace(/\s/g, '_');
+			        });
+
+			    //Within each group, create a new line/path,
+			    //binding just the rates data to each one
+			    groups.selectAll("path")
+			        .data(function (d) { // because there's a group with data already...
+			            return [d.rates]; // it has to be an array for the line function
+			        })
+			        .enter()
+			        .append("path")
+			        .attr("class", "line")
+			        .attr("d", line)
+			        .classed("normal", true)
+			        .classed("focused", false); // gives gray color
+
+
+			    /*======================================================================
+			      Adding the Axes
+			    ======================================================================*/
+			    svg.append("g")
+			        .attr("class", "x axis")
+			        .attr("transform", "translate(0," + (height - margin.bottom) + ")")
+			        .call(xAxis)
+			        .append("text")
+			        .attr("x", width - margin.left - margin.right)
+			        .attr("y", margin.bottom / 3)
+			        .attr("dy", "1em")
+			        .style("text-anchor", "end")
+			        .attr("class", "label")
+			        .text("Year");
+
+			    svg.append("g")
+			        .attr("class", "y axis")
+			        .attr("transform", "translate(" + margin.left + ",0)")
+			        .call(yAxis)
+			        .append("text")
+			        .attr("transform", "rotate(-90)")
+			        .attr("x", -margin.top)
+			        .attr("y", -2*margin.left / 3)
+			        .attr("dy", "1em")
+			        .style("text-anchor", "end")
+			        .attr("class", "label")
+			        .text("Under 5 Mortality Rate");
+
+			};
+
+			//focus on country
+			function focus_country(country) {
+				  console.log("in focus", country);
+				  // unfocus all, then focus one if given a name.
+				    d3.selectAll("path.line").classed("focused", false);
+				    if (country) {
+				        var country = country.replace(/\s/g, '_');
+				        var line = d3.select("g.lines#" + country + " path.line");
+				        line.classed("focused", true);
+				        line.moveToFront();
+				    }
+				};
+
+
+			  d3.select("button#Haiti").on("click", function() {
+				//   console.log("Haiti");
+				   focus_country("Haiti");
+				//   //update(case 1);
+				//   //d3.select("section#step1").style("display", "inline-block");
+				 });
+			  d3.select("button#Myanmar").on("click", function(){
+			  	focus_country("Myanmar");
+			  });
+			  d3.select("button#Tajikistan").on("click", function(){
+			  	focus_country("Tajikistan");
+			  })
+			  d3.select("button#Korea").on("click", function(){
+			  	focus_country("Korea");
+			  })
+			  d3.select("button#Indonesia").on("click", function(){
+			  	focus_country("Indonesia");
+			  })
+			  d3.select("button#Armenia").on("click", function(){
+			  	focus_country("Armenia");
+			  })
+			  d3.select("button#Nicaragua").on("click", function(){
+			  	focus_country("Nicaragua");
+			  })
+			  d3.select("button#Honduras").on("click", function(){
+			  	focus_country("Honduras");
+			  })
+			  d3.select("button#Samoa").on("click", function(){
+			  	focus_country("Samoa");
+			  })
+			  d3.select("button#Venezuela").on("click", function(){
+			  	focus_country("Venezuela");
+			  })
+
+			
+			//display data
+			var data = []; // make this global
+
+			function display(error, mydata) {
+			  if (error) {
+			    console.log(error);
+			  } else {
+			    console.log(data);
+			    data = mydata; // assign to global
+
+			    draw_lines(data);
+			  }
+			}
+
+
+			//queue the data
+
+			queue()
+				  .defer(d3.csv, "data/timeline.csv")
+				  .await(display);
+
+			//jquery for button
+
+$(document).ready(function(){
+$(".toggle_container").hide(); 
+$("button.reveal").click(function(){
+    $(this).toggleClass("active").next().slideToggle("fast");
+    
+    if ($.trim($(this).text()) === 'Show Answer') {
+        $(this).text('Hide Answer');
+    } else {
+        $(this).text('Show Answer');        
+    }
+    
+    return false; 
+});
+ $("a[href='" + window.location.hash + "']").parent(".reveal").click();
+});
+
+					
+	</script>
+</html>

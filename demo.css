@@ -185,6 +185,7 @@ g.legendCells {
         padding-top: 0;
         padding-bottom: 0;
         margin-left: 50px;
+        font-size: 80%;
       }
 
       .axis path,
@@ -238,7 +239,7 @@ g.legendCells {
       /* this is an adjustment to bootstrap's row for my page */
       .row {
         padding-top: 50px;
-        padding-left: 50px;
+        padding-left: 20px;
       }
 
       /* this is an adsjustment to bootstrap for my page */
@@ -277,10 +278,17 @@ g.legendCells {
         margin-top: 5px;
         padding: 0 6px 0 6px;
         cursor: pointer;
+        font-size: 80%;
+
 }
 
 #region_btn {
-  padding: 0;
+  padding-left: 30;
+  padding-right: 0;
+}
+
+#index_btn {
+  padding-left: 30;
 }
 /*#filters a:last-child {
     margin-right: 0;

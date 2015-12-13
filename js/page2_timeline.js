@@ -1,8 +1,8 @@
 
 			var marginPage2 = {
 			    top: 50,
-			    right: 0,
-			    bottom: 80,
+			    right: 80,
+			    bottom: 150,
 			    left: 100
 			    };
 

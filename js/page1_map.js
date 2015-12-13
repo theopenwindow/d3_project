@@ -6,8 +6,7 @@ var map = d3.select('#page1_map').append('svg')
 
 var projection = d3.geo.mercator()
     .center([20, -50])
-
-    .scale(80) // mess with this if you want
+    .scale(90) // mess with this if you want
     .translate([width / 2, 340]);
 
 var path = d3.geo.path()
@@ -101,10 +100,10 @@ function loaded(error, countries, mortality) {
 
     map.append("g")
       .attr("class", "legendLinear")
-      .attr("transform", "translate(430,340)");
+      .attr("transform", "translate(400,10)");
 
     var legendLinear = d3.legend.color()
-      .shapeWidth(30)
+      .shapeWidth(25)
       .orient('horizontal')
       .scale(linear);
 

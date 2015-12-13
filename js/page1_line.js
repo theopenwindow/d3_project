@@ -1,7 +1,7 @@
 //draw Line Chart:
 			var width = 600;
 			var height = 450;
-			var margin = {top: 20, right: 40, bottom: 30, left:20};
+			var margin = {top: 40, right: 70, bottom: 30, left:30};
 			// var width = 80%,
 			//  height = 80%;
 			// var margin = {top:10%, right:10%, bottom: 10%, left:10%};

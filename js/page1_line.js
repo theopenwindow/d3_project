@@ -1,7 +1,7 @@
 //draw Line Chart:
 			var width = 600;
 			var height = 450;
-			var margin = {top: 40, right: 70, bottom: 30, left:30};
+			var margin = {top: 40, right: 70, bottom: 30, left:60};
 			// var width = 80%,
 			//  height = 80%;
 			// var margin = {top:10%, right:10%, bottom: 10%, left:10%};
@@ -59,6 +59,18 @@
 					.attr("class", "y axis")
 					.attr("transform", "translate(" + margin.left + ",0)")
 					.call(page1yAxis);
+
+			var tooltip_line = d3.select("body")
+      	                    .append("div")
+      	                    .attr("class", "tooltip");
+
+      	    var LineLabel = svgLine.append('text')
+								.attr("transform", "rotate(-90)")
+								.attr("x", -margin.top - 100)
+								.attr("y", margin.left - 10)
+								.style("text-anchor", "end")
+								.attr("class","label")
+								.text("Under Five Mortality Rate");
 
 
 			var page1years = ["1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"];
@@ -163,18 +175,60 @@
 			draw_line(dataWorld);
 
 		    d3.select("button#Country").on("click", function(){
-				draw_line(dataCountry);
+		    	draw_line(dataCountry);
 				map_redraw("Country");
+		    	d3.selectAll("button").classed("selected", false);
+				d3.select("button#Country").classed("selected", true);
+
+				function mouseoverFuncLine(d) {
+					d3.select(this)
+						.transition()
+						.style("opacity", 1)
+						//.attr("fill", "#912F3A")
+						.attr("r", 4);
+					tooltip
+						.style("display", null) 
+						.html("<p>Country: " + d.country +
+									"<br>Year: " + d.year +
+								  "<br>Mortality: " + d.amount + "</p>");
+					
+					d3.selectAll("path.line").classed("unfocused", true);
+					var mygroup = d3.select(this).node().parentNode;
+		            d3.select(mygroup).select("path.line").classed("unfocused", false).classed("focused", true);
+					}
+
+				function mousemoveFuncLine(d) {
+					tooltip
+						.style("top", (d3.event.pageY - 10) + "px" )
+						.style("left", (d3.event.pageX + 10) + "px");
+					}
+
+
+			    function mouseoutFuncLine() {
+
+			    	d3.select(this)
+						.transition()
+						.duration(50)
+						.style("opacity", 0)
+						.attr("r", 0);
+			    	d3.selectAll("path.line").classed("unfocused", true).classed("focused", false);
+			    	tooltip.style("display", "none");  
+	          }
+				
 			});
 
 			d3.select("button#Region").on("click", function(){
 				draw_line(dataRegion);
 				map_redraw("Region");
+				d3.selectAll("button").classed("selected", false);
+				d3.select("button#Region").classed("selected", true);
 			});
 
 			d3.select("button#World").on("click", function(){
 				draw_line(dataWorld);
 				map_redraw("World");
+				d3.selectAll("button").classed("selected", false);
+				d3.select("button#World").classed("selected", true);
 			});
 	   }};
 

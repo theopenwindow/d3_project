@@ -1,7 +1,7 @@
 
 			var marginPage2 = {
 			    top: 50,
-			    right: 80,
+			    right: 100,
 			    bottom: 150,
 			    left: 100
 			    };
@@ -28,12 +28,12 @@
 			    .tickFormat(function (d) {
 			        return dateFormat(d);
 			    })
-			    .innerTickSize(0);
+			    .innerTickSize(5);
 
 			    var yAxisPage2 = d3.svg.axis()
 			    .scale(yScalePage2)
 			    .orient("left")
-			    .innerTickSize(0);
+			    .innerTickSize(5);
 
 			    //Configure line generator
 			    // each line dataset must have a d.year and a d.rate for this to work.
@@ -142,7 +142,8 @@
 			        .call(xAxisPage2)
 			        .append("text")
 			        .attr("x", widthPage2 - marginPage2.left - marginPage2.right)
-			        .attr("y", marginPage2.bottom / 3)
+			        // .attr("y", marginPage2.bottom / 3)
+			        .attr("y", "25")
 			        .attr("dy", "1em")
 			        .style("text-anchor", "end")
 			        .attr("class", "label")
@@ -154,8 +155,10 @@
 			        .call(yAxisPage2)
 			        .append("text")
 			        .attr("transform", "rotate(-90)")
-			        .attr("x", -marginPage2.top)
-			        .attr("y", -2*marginPage2.left / 3)
+			        // .attr("x", -marginPage2.top)
+			        // .attr("y", -2*marginPage2.left / 3)
+			        .attr("x", "-180")
+			        .attr("y", "-60")
 			        .attr("dy", "1em")
 			        .style("text-anchor", "end")
 			        .attr("class", "label")

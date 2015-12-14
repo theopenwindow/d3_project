@@ -51,24 +51,18 @@ header,
 
 /*************************page1_line********************************/
 
-path.line {
+#page1_line g line{
         fill: none;
-        stroke: white;
-        stroke-width: 1px;
+        stroke: lightgrey;
+        stroke-width: 0.2px;
       }
-
-/*g .axis{
-        fill: none;
-        stroke: white;
-        stroke-width: 0.4px;
-}*/
 
 .tick {
   opacity: 0.5;
 }
 
 #page1_line g path {
-  stroke: black;
+  stroke: grey;
   fill: none;
 }
 
@@ -131,6 +125,10 @@ g.legendCells {
                 font-size: 80%
             }
 
+#page1_map svg path:hover {
+    opacity: .3;
+}
+
 /*************************page2 time line********************************/
 
       .line.normal {
@@ -167,7 +165,7 @@ g.legendCells {
       }
 
       #page2_text {
-        margin-top: 100;
+        margin-top: 50;
       }
 
 /************************* page3 scatter plot********************************/
@@ -228,17 +226,17 @@ g.legendCells {
         font-size: 12;
       }
 
-      .circle.unfocused{
+      .circleunfocused{
         fill-opacity: 70%;
       }
 
-      .circle.focused {
+      .circlefocused {
         fill-opacity: 100%;
       }     
 
       /* this is an adjustment to bootstrap's row for my page */
       .row {
-        padding-top: 50px;
+        padding-top: 30px;
         padding-left: 20px;
       }
 
@@ -288,7 +286,8 @@ g.legendCells {
 }
 
 #index_btn {
-  padding-left: 30;
+  padding-left: 5;
+  padding-right: 0;
 }
 /*#filters a:last-child {
     margin-right: 0;
@@ -307,13 +306,13 @@ g.legendCells {
 
 
 g path {
-    stroke: white;
-    stroke-width: 0.9;
+    stroke: grey;
+    stroke-width: 0.3;
     fill: none;
 }
 g path.current, g path.highlight.current {
     stroke: #000;
-    stroke-width: 1.7;
+    stroke-width: 1;
 }
 .SAS.highlight { stroke: #895881; }
 .ECS.highlight { stroke: #ED7C31; }
@@ -322,7 +321,7 @@ g path.current, g path.highlight.current {
 .LCN.highlight { stroke: #00BBD6; }
 .EAS.highlight { stroke: #e25f82; }
 .NAC.highlight { stroke: #be1932; }
-.highlight { stroke-width: 2px; } 
+.highlight { stroke-width: 1px; } 
 
 line {
     stroke: black;

@@ -16,6 +16,10 @@ var colorScale = d3.scale.linear().range(["#BBD9FA", "#267CDE"]).interpolate(d3.
 
 var countryById = d3.map();
 
+var tooltip_map = d3.select("path")
+                 .append("div")
+                 .attr("class", "tooltip");
+
 // we use queue because we have 2 data files to load.
 queue()
     .defer(d3.json, "data/countries.json")
@@ -29,6 +33,17 @@ function typeAndSet(d) {
     d.Region2015 = +d.Region2015;
     //console.log(countryById.set(d.ISO, d));
     return d;
+}
+
+function getText(d) {
+ var dataRow = countryById.get(d.properties.iso_a3);
+    if (dataRow) {
+        //console.log(dataRow);
+        return dataRow.Country + ": " + dataRow.Year2015 + " ‰";
+    } else {
+        //console.log("no dataRow", d);
+        return d.properties.name + ": No data.";
+    }
 }
 
 
@@ -94,8 +109,6 @@ function loaded(error, countries, mortality) {
             return getWorldColor(d);
                     });
 
-
-
     var linear = colorScale;
 
     map.append("g")
@@ -110,9 +123,38 @@ function loaded(error, countries, mortality) {
     map.select(".legendLinear")
       .call(legendLinear);
 
+    d3.selectAll("#page1_map path")
+      .style('cursor','pointer')
+      .on("mouseover", mouseoverFuncMap)
+      .on("mouseout", mouseoutFuncMap)
+      .on("mousemove", mousemoveFuncMap); 
+
+    function mouseoverFuncMap(d) {
+        //d3.selectAll("path.countries").classed("unfocused", true);
+        //d3.select(this).select("path.countries").classed("unfocused", false).classed("focused", true);
+        tooltip_map
+            .data(countries)
+            .style("display", null) 
+            .html("<p>" + getText(d) + "</p>");
+    };
+
+    function mouseoutFuncMap() {
+           // d3.selectAll("path.countries").classed("unfocused", false).classed("focused", false);
+
+            tooltip_map.style("display", "none");  
+    };
+
+    function mousemoveFuncMap(d) {
+        tooltip_map
+            .style("top", (d3.event.pageY - 10) + "px" )
+            .style("left", (d3.event.pageX + 10) + "px");
+    };
+
   
 
 }
+
+
 
 //make the button for world look selected when the page loads.
 //             draw_line(dataWorld);

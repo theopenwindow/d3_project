@@ -11,6 +11,17 @@ body {
   background: black;
 }
 
+.credit {
+  text-decoration: none;
+  background-color: black;
+  color: white;
+  font-family: Open Sans;
+  width: 1300px;
+  height:50px;
+  text-align: center;
+}
+
+
 
 h1{
   color: white;
@@ -21,6 +32,10 @@ h1{
 
 h2{
   padding-left: 20px;
+}
+
+p{
+  font-family: 'Slabo 27px', serif;
 }
 
 .main-nav,
@@ -64,6 +79,7 @@ header,
 #page1_line g path {
   stroke: grey;
   fill: none;
+  stroke-width:0.8;
 }
 
 
@@ -79,6 +95,17 @@ header,
         fill: #A8ADAD;
       }
 
+.line.unfocused{
+        stroke-opacity: 30%;
+      }
+
+
+.line.focused {
+        fill: none;
+        stroke-width: 1.5px;
+        stroke-opacity: 100%;
+        stroke: #912F3A;
+      }
 
 /*************************page1_map********************************/
 #page1_text{
@@ -113,17 +140,6 @@ g.legendCells {
   margin-top: 200px;
 }
 
-.tooltip {
-                position: absolute;
-                z-index: 10;
-            }
-
-.tooltip p {
-                background-color: rgba(255, 255, 255, 0.7);             
-                box-shadow: 5px 3px 3px #DCDEDE;
-                padding: 1px 3px 1px 3px;
-                font-size: 80%
-            }
 
 #page1_map svg path:hover {
     opacity: .3;
@@ -243,15 +259,19 @@ g.legendCells {
       /* this is an adsjustment to bootstrap for my page */
 
       circle.current, circle.highlight.current {
-    stroke: #000;
-    stroke-width: 1.7;
-} 
+            stroke: #000;
+            stroke-width: 1.7;
+      } 
 
-#page3_paragraph {
-  padding-left: 40px;
-    padding-top:40px;
-  padding-right: 40px;
-}
+      #page3_paragraph {
+        padding-left: 40px;
+          padding-top:40px;
+        padding-right: 40px;
+      }
+
+      #page3_index {
+        margin-left: 50px;
+      }
 
 
 
@@ -337,4 +357,7 @@ text {
     stroke-width: 0.6;
     stroke: #000;
 }
+
+
+
 

@@ -69,6 +69,7 @@
 				circlesScatter
 					.on("mousemove", mousemoveFunc)
 					.on("mouseout",	mouseoutFunc);
+
 			
 
 				svgScatter.append("g")
@@ -123,7 +124,10 @@
 
 
 
+
+
 				d3.select("button#literacy").classed("selected", true);
+				d3.select("#literacy").on("click", true);
 
 //click to GNI per capita:
 					d3.select("#literacy").on("click", function() {

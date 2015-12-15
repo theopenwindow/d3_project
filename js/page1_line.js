@@ -60,6 +60,11 @@
 					.attr("transform", "translate(" + margin.left + ",0)")
 					.call(page1yAxis);
 
+			d3.selectAll("g.lines")
+					.on("mouseover", mouseoverFunc_Line)
+					.on("mouseout", mouseoutFunc_Line)
+					.on("mousemove", mousemoveFunc_Line); 
+
 			var tooltip_line = d3.select("body")
       	                    .append("div")
       	                    .attr("class", "tooltip");
@@ -116,12 +121,13 @@
 			d3.selectAll("g.lines").remove();
 
 				var groups = svgLine.selectAll("g.lines")
-					.data(dataset, function(d) {
+					.data(dataset, function(d){
 						return d.country;
 					})
 					.enter()
 					.append("g")
-					.attr("class", "lines");
+					.attr("class", "lines")
+					.style("cursor", "pointer");
 
 				var paths = groups.selectAll("path")
 									.data(function(d) {
@@ -153,6 +159,8 @@
 					   .transition()
 					   .duration(2000)
 					   .call(page1xAxis);
+
+
 			};
 
 
@@ -179,42 +187,6 @@
 				map_redraw("Country");
 		    	d3.selectAll("button").classed("selected", false);
 				d3.select("button#Country").classed("selected", true);
-
-				function mouseoverFuncLine(d) {
-					d3.select(this)
-						.transition()
-						.style("opacity", 1)
-						//.attr("fill", "#912F3A")
-						.attr("r", 4);
-					tooltip
-						.style("display", null) 
-						.html("<p>Country: " + d.country +
-									"<br>Year: " + d.year +
-								  "<br>Mortality: " + d.amount + "</p>");
-					
-					d3.selectAll("path.line").classed("unfocused", true);
-					var mygroup = d3.select(this).node().parentNode;
-		            d3.select(mygroup).select("path.line").classed("unfocused", false).classed("focused", true);
-					}
-
-				function mousemoveFuncLine(d) {
-					tooltip
-						.style("top", (d3.event.pageY - 10) + "px" )
-						.style("left", (d3.event.pageX + 10) + "px");
-					}
-
-
-			    function mouseoutFuncLine() {
-
-			    	d3.select(this)
-						.transition()
-						.duration(50)
-						.style("opacity", 0)
-						.attr("r", 0);
-			    	d3.selectAll("path.line").classed("unfocused", true).classed("focused", false);
-			    	tooltip.style("display", "none");  
-	          }
-				
 			});
 
 			d3.select("button#Region").on("click", function(){
@@ -222,6 +194,8 @@
 				map_redraw("Region");
 				d3.selectAll("button").classed("selected", false);
 				d3.select("button#Region").classed("selected", true);
+
+
 			});
 
 			d3.select("button#World").on("click", function(){
@@ -238,6 +212,28 @@ queue()
   .defer(d3.csv, "data/region_2.csv")
   .defer(d3.csv, "data/world.csv")
   .await(load);
+
+  //mouse functions for tooltip
+  	function mouseoverFunc_Line(d) {
+
+
+		d3.selectAll("path.line").classed("unfocused", true);
+		d3.select(this).select("path.line").classed("unfocused", false).classed("focused", true);
+		tooltip
+			.style("display", null) 
+			.html("<p>" + d.country + "</p>");
+	}
+
+	function mouseoutFunc_Line() {
+			d3.selectAll("path.line").classed("unfocused", false).classed("focused", false);
+			tooltip.style("display", "none");  
+	}
+
+	function mousemoveFunc_Line(d) {
+		tooltip
+			.style("top", (d3.event.pageY - 10) + "px" )
+			.style("left", (d3.event.pageX + 10) + "px");
+	}
  
 
 

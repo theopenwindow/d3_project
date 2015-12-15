@@ -130,36 +130,6 @@ function onclick(d, i) {
     }
 }
 
-// function onmouseover(d, i) {
-//     var currClass = d3.select(this).attr("class");
-//     d3.select(this)
-//         .attr("class", currClass + " current");
-    
-//     var countryCode = $(this).attr("country");
-//     var countryVals = startEnd[countryCode];
-//     var percentChange = 100 * (countryVals['endVal'] - countryVals['startVal']) / countryVals['startVal'];
-    
-//     var blurb = '<h2>' + countryCodes[countryCode] + '</h2>';
-//     blurb += "<p>On average: the under five mortality rate of " + Math.round(countryVals['startVal']) + " per thousand births in " + countryVals['startYear'] + " and " + Math.round(countryVals['endVal']) + " per thousand births in " + countryVals['endYear'] + ", ";
-//     if (percentChange >= 0) {
-//         blurb += "an increase of " + Math.round(percentChange) + " percent."
-//     } else {
-//         blurb += "a decrease of " + -1 * Math.round(percentChange) + " percent."
-//     }
-//     blurb += "</p>";
-    
-//     $("#default-blurb").hide();
-//     $("#blurb-content").html(blurb);
-// }
-// function onmouseout(d, i) {
-//     var currClass = d3.select(this).attr("class");
-//     var prevClass = currClass.substring(0, currClass.length-8);
-//     d3.select(this)
-//         .attr("class", prevClass);
-//     // $("#blurb").text("hi again");
-//     $("#default-blurb").show();
-//     $("#blurb-content").html('');
-// }
 
 function showRegion(regionCode) {
     var countries = d3.selectAll("path."+regionCode);

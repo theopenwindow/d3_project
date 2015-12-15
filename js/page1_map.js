@@ -16,9 +16,10 @@ var colorScale = d3.scale.linear().range(["#BBD9FA", "#267CDE"]).interpolate(d3.
 
 var countryById = d3.map();
 
-var tooltip_map = d3.select("path")
+var tooltip_map = d3.select("body")
                  .append("div")
                  .attr("class", "tooltip");
+
 
 // we use queue because we have 2 data files to load.
 queue()
@@ -35,13 +36,15 @@ function typeAndSet(d) {
     return d;
 }
 
+
 function getText(d) {
- var dataRow = countryById.get(d.properties.iso_a3);
+
+ var dataRow = countryById.get(d.id);
     if (dataRow) {
-        //console.log(dataRow);
-        return dataRow.Country + ": " + dataRow.Year2015 + " ‰";
+        console.log(dataRow);
+        return dataRow.CountryName + ": " + dataRow.Year2015 + " ‰";
     } else {
-        //console.log("no dataRow", d);
+        console.log("no dataRow", d);
         return d.properties.name + ": No data.";
     }
 }
@@ -123,12 +126,6 @@ function loaded(error, countries, mortality) {
     map.select(".legendLinear")
       .call(legendLinear);
 
-    d3.selectAll("#page1_map path")
-      .style('cursor','pointer')
-      .on("mouseover", mouseoverFuncMap)
-      .on("mouseout", mouseoutFuncMap)
-      .on("mousemove", mousemoveFuncMap); 
-
     function mouseoverFuncMap(d) {
         //d3.selectAll("path.countries").classed("unfocused", true);
         //d3.select(this).select("path.countries").classed("unfocused", false).classed("focused", true);
@@ -150,14 +147,16 @@ function loaded(error, countries, mortality) {
             .style("left", (d3.event.pageX + 10) + "px");
     };
 
+                    d3.selectAll("#page1_map path")
+                      .style('cursor','pointer')
+                      .on("mouseover", mouseoverFuncMap)
+                      .on("mouseout", mouseoutFuncMap)
+                      .on("mousemove", mousemoveFuncMap); 
+
   
 
 }
 
 
 
-//make the button for world look selected when the page loads.
-//             draw_line(dataWorld);
-//             map_redraw("World");
-//             d3.select("button#World").classed("selected", true);
 

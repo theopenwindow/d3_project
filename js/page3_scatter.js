@@ -1,7 +1,7 @@
 			var widthScatter = 500;
 			var heightScatter = 400;
 
-			var marginScatter = {top: 20, right: 10, bottom: 50, left: 70 };
+			var marginScatter = {top: 20, right: 10, bottom: 50, left: 80 };
 			var dotRadius = 4;
 
 			var xScaleScatter = d3.scale.linear()
@@ -88,7 +88,7 @@
 								(heightScatter-15) + ")")
 					.style("text-anchor", "middle")
 					.attr("dy", "12")
-					.text("Under 5 Mortality Rate (per thousand births)")
+					.text("Under 5 Mortality Rate in 2015 (per thousand births)")
 					.attr("font-family", "Open Sans");
 
                 var ylabel = svgScatter.append("text")
@@ -127,7 +127,6 @@
 
 
 				d3.select("button#literacy").classed("selected", true);
-				d3.select("#literacy").on("click", true);
 
 //click to GNI per capita:
 					d3.select("#literacy").on("click", function() {

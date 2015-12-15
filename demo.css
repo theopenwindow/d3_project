@@ -83,24 +83,18 @@ header,
 }
 
 
-
-.axis text {
-        font-family: sans-serif;
-        font-size: 11px;
-        fill: #A8ADAD;
-      }
-
-
 .label {
-        fill: #A8ADAD;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 11px;
+        line-height: 1em;
       }
 
-.line.unfocused{
+#page1_line g path .unfocused_line{
         stroke-opacity: 30%;
       }
 
 
-.line.focused {
+#page1_line g path .focused_line {
         fill: none;
         stroke-width: 1.5px;
         stroke-opacity: 100%;

@@ -148,7 +148,7 @@
 
 				paths.transition()
 				     .duration(2000)
-				     .style("opacity", 1);
+				     .style("opacity", 0.6);
 
 			    svgLine.select(".y.axis")
 					   .transition()
@@ -160,7 +160,10 @@
 					   .duration(2000)
 					   .call(page1xAxis);
 
-
+			    d3.selectAll("g.lines")
+			    	.on("mouseover", mouseoverFunc_Line)
+			    	.on("mouseout", mouseoutFunc_Line)
+			    	.on("mousemove", mousemoveFunc_Line);
 			};
 
 
@@ -217,20 +220,20 @@ queue()
   	function mouseoverFunc_Line(d) {
 
 
-		d3.selectAll("path.line").classed("unfocused", true);
-		d3.select(this).select("path.line").classed("unfocused", false).classed("focused", true);
-		tooltip
+		d3.selectAll("path.lines").classed("unfocused_line", true);
+		d3.select(this).select("path.lines").classed("unfocused_line", false).classed("focused_line", true);
+		tooltip_line
 			.style("display", null) 
 			.html("<p>" + d.country + "</p>");
 	}
 
 	function mouseoutFunc_Line() {
-			d3.selectAll("path.line").classed("unfocused", false).classed("focused", false);
-			tooltip.style("display", "none");  
+			d3.selectAll("path.lines").classed("unfocused_line", false).classed("focused_line", false);
+			tooltip_line.style("display", "none");  
 	}
 
 	function mousemoveFunc_Line(d) {
-		tooltip
+		tooltip_line
 			.style("top", (d3.event.pageY - 10) + "px" )
 			.style("left", (d3.event.pageX + 10) + "px");
 	}

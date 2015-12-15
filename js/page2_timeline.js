@@ -2,7 +2,7 @@
 			var marginPage2 = {
 			    top: 50,
 			    right: 100,
-			    bottom: 150,
+			    bottom: 70,
 			    left: 100
 			    };
 

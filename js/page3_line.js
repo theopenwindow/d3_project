@@ -1,14 +1,14 @@
 var regions = { "SAS": "South Asia" , "ECS": "Europe and Central Asia", "MEA": "Middle East & North Africa", "SSF": "Sub-Saharan Africa", "LCN": "Latin America & Caribbean", "EAS": "East Asia &amp; Pacific", "NAC": "North America" },
     w = 400,
-    h = 400,
-    page3margin = 30,
+    h = 410,
+    page3margin = {top: 30, right: 30, bottom: 40, left:50};
     startYear = 1960, 
     endYear = 2015,
     startu5mr = 0,
     endu5mr = 443.5,
     years = d3.range(startYear, endYear + 1),
-    y = d3.scale.linear().domain([endu5mr, startu5mr]).range([0 + page3margin, h - page3margin]),
-    x = d3.scale.linear().domain([1960, 2015]).range([0 + page3margin -5, w]);
+    y = d3.scale.linear().domain([endu5mr, startu5mr]).range([0 + page3margin.left, h - page3margin.bottom]),
+    x = d3.scale.linear().domain([1960, 2015]).range([0 + page3margin.left -5, w]);
 
 var vis = d3.select("#vis")
     .append("svg")
@@ -72,14 +72,14 @@ vis.append("line")
     .attr("y1", y(startu5mr))
     .attr("x2", x(endYear))
     .attr("y2", y(startu5mr))
-    .attr("class", "axis")
+    .attr("class", "axis");
 
 vis.append("svg:line")
     .attr("x1", x(startYear))
     .attr("y1", y(startu5mr))
     .attr("x2", x(startYear))
     .attr("y2", y(endu5mr))
-    .attr("class", "axis")
+    .attr("class", "axis");
 
 ////////////////////////////////LABEL            
 vis.selectAll(".xLabel")
@@ -88,18 +88,33 @@ vis.selectAll(".xLabel")
     .attr("class", "xLabel")
     .text(String)
     .attr("x", function(d) { return x(d) })
-    .attr("y", h-10)
-    .attr("text-anchor", "middle")
+    .attr("y", h-20)
+    .attr("text-anchor", "middle");
 
 vis.selectAll(".yLabel")
     .data(y.ticks(4))
     .enter().append("text")
     .attr("class", "yLabel")
     .text(String)
-    .attr("x", 0)
+    .attr("x", page3margin.left - 30)
     .attr("y", function(d) { return y(d) })
     .attr("text-anchor", "right")
-    .attr("dy", 3)
+    .attr("dy", 3);
+
+var Y_Label = vis.append('text')
+                       .attr("transform", "rotate(-90)")
+                       .attr("x", -120)
+                       .attr("y", 10)
+                       .style("text-anchor", "end")
+                       .attr("class","label")
+                        .text("Under Five Mortality Rate");
+
+var X_Label = vis.append('text')
+                       .attr("x", w - 10)
+                       .attr("y", h - 5)
+                       .style("text-anchor", "end")
+                       .attr("class","label")
+                        .text("Year");
 
 /////////////////////////////////TICKS   
             

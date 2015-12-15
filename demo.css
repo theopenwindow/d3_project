@@ -143,6 +143,8 @@ g.legendCells {
 
       .line.normal {
         stroke: gray;
+        stroke-width: 0.7;
+        fill: none;
       }
 
       .line.unfocused{
@@ -246,7 +248,7 @@ g.legendCells {
 
       /* this is an adjustment to bootstrap's row for my page */
       .row {
-        padding-top: 30px;
+        padding-top: 10px;
         padding-left: 20px;
       }
 
@@ -259,7 +261,6 @@ g.legendCells {
 
       #page3_paragraph {
         padding-left: 40px;
-          padding-top:40px;
         padding-right: 40px;
       }
 

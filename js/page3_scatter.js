@@ -131,7 +131,7 @@
 //click to GNI per capita:
 					d3.select("#literacy").on("click", function() {
 						d3.selectAll("button").classed("selected", false);
-					    d3.select("button#GNI").classed("selected", true);
+					    d3.select("button#literacy").classed("selected", true);
 
                         yScaleScatter
 						    .domain(d3.extent(data, function(d){

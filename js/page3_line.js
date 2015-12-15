@@ -1,7 +1,7 @@
 var regions = { "SAS": "South Asia" , "ECS": "Europe and Central Asia", "MEA": "Middle East & North Africa", "SSF": "Sub-Saharan Africa", "LCN": "Latin America & Caribbean", "EAS": "East Asia &amp; Pacific", "NAC": "North America" },
     w = 400,
     h = 410,
-    page3margin = {top: 30, right: 30, bottom: 40, left:50};
+    page3margin = {top: 0, right: 30, bottom: 40, left:50};
     startYear = 1960, 
     endYear = 2015,
     startu5mr = 0,

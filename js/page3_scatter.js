@@ -1,7 +1,7 @@
 			var widthScatter = 500;
 			var heightScatter = 400;
 
-			var marginScatter = {top: 20, right: 10, bottom: 50, left: 80 };
+			var marginScatter = {top: 20, right: 10, bottom: 50, left: 90 };
 			var dotRadius = 4;
 
 			var xScaleScatter = d3.scale.linear()
@@ -27,7 +27,7 @@
 			var drawylabel = svgScatter.append('text')
 								.attr("transform", "rotate(-90)")
 								.attr("x", -marginScatter.top)
-								.attr("y", -marginScatter.left + 103)
+								.attr("y", -marginScatter.left + 113)
 								.style("text-anchor", "end")
 								.attr("class","label");
 
@@ -122,21 +122,35 @@
 					    tooltip.style("display", "none");  
 					  };
 
-
-
+			   	ylabel
+						       .text("Total Adult Literacy Rate (%)")
+						       .transition()
+						       .duration(2000);
 
 
 				d3.select("button#literacy").classed("selected", true);
+				d3.select("p#p1").style("display", "inline");
+				d3.select("p#p2").style("display", "none");		
+				d3.select("p#p3").style("display", "none");
 
+			
 //click to GNI per capita:
 					d3.select("#literacy").on("click", function() {
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#literacy").classed("selected", true);
+					    d3.select("p#p1").style("display", "inline");
+						d3.select("p#p2").style("display", "none");		
+						d3.select("p#p3").style("display", "none");
 
                         yScaleScatter
 						    .domain(d3.extent(data, function(d){
 							return + d.literacy;
             		        }));
+
+            		    svgScatter.select(".y.axis")
+						    .transition()
+						    .duration(2000)
+						    .call(yAxisScatter);
 
 
 						circlesScatter
@@ -179,6 +193,9 @@
 						d3.select("#GNI").on("click", function() {
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#GNI").classed("selected", true);
+					    d3.select("p#p2").style("display", "inline");
+						d3.select("p#p1").style("display", "none");		
+						d3.select("p#p3").style("display", "none");
 
                         yScaleScatter
 						    .domain(d3.extent(data, function(d){
@@ -203,6 +220,12 @@
 						circlesScatter
 					         .on("mouseover", mouseoverFunc);
 
+					    ylabel
+						       .text("GNI per Capita")
+						       .transition()
+						       .duration(2000)
+						       .call(ylabel);
+
 						function mouseoverFunc(d) {
 							d3.select(this)
 								.transition()
@@ -215,17 +238,15 @@
 							d3.selectAll("circle").classed("circleunfocused", true);
 				            d3.select(this).select("circle").classed("circleunfocused", false).classed("circlefocused", true);
 							};
-
-							ylabel
-						       .text("GNI per Capita")
-						       .transition()
-						       .duration(2000)
-						       .call(ylabel);
 						});
 
 						d3.select("#breastfeeding").on("click", function() {
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#breastfeeding").classed("selected", true);
+					    d3.select("p#p3").style("display", "inline");
+						d3.select("p#p1").style("display", "none");		
+						d3.select("p#p2").style("display", "none");
+
 
                         yScaleScatter
 						    .domain(d3.extent(data, function(d){
@@ -250,6 +271,12 @@
 						circlesScatter
 					         .on("mouseover", mouseoverFunc);
 
+					    ylabel
+						       .text("Breastfeeding at Age2 (%)")
+						       .transition()
+						       .duration(2000)
+						       .call(ylabel);
+
 						function mouseoverFunc(d) {
 							d3.select(this)
 								.transition()
@@ -263,11 +290,7 @@
 				            d3.select(this).select("circle").classed("circleunfocused", false).classed("circlefocused", true);
 							};
 
-							ylabel
-						       .text("Breastfeeding at Age2 (%)")
-						       .transition()
-						       .duration(2000)
-						       .call(ylabel);	
+								
 
 						});
 
@@ -295,6 +318,12 @@
 								return yScaleScatter(+d.water);
 							});
 
+						ylabel
+						       .text("Use of Improved Drinking Water Sources(%)")
+						       .transition()
+						       .duration(2000)
+						       .call(ylabel);	
+
 						function mouseoverFunc(d) {
 							d3.select(this)
 								.transition()
@@ -307,13 +336,6 @@
 							d3.selectAll("circle").classed("circleunfocused", true);
 				            d3.select(this).select("circle").classed("circleunfocused", false).classed("circlefocused", true);
 							};
-
-						ylabel
-						       .text("Use of Improved Drinking Water Sources(%)")
-						       .transition()
-						       .duration(2000)
-						       .call(ylabel);	
-
 
 						});
 //Select sanitation
@@ -343,7 +365,13 @@
             		        }));
 
 						circlesScatter
-					         .on("mouseover", mouseoverFunc)
+					         .on("mouseover", mouseoverFunc);
+
+					    ylabel
+						       .text("Use of Improved Sanitation Facilities (%)")
+						       .transition()
+						       .duration(2000)
+						       .call(ylabel);	
 
 						function mouseoverFunc(d) {
 							d3.select(this)
@@ -358,11 +386,7 @@
 				            d3.select(this).select("circle").classed("circleunfocused", false).classed("circlefocused", true);
 							};
 
-							ylabel
-						       .text("Use of Improved Sanitation Facilities (%)")
-						       .transition()
-						       .duration(2000)
-						       .call(ylabel);	
+							
 
 						});
 
@@ -386,6 +410,12 @@
 								return yScaleScatter(+d.birth);
 							});
 
+						ylabel
+						       .text("Skilled Attendant at Birth(%)")
+						       .transition()
+						       .duration(2000)
+						       .call(ylabel);
+
 						function mouseoverFunc(d) {
 							d3.select(this)
 								.transition()
@@ -399,11 +429,7 @@
 				            d3.select(this).select("circle").classed("circleunfocused", false).classed("circlefocused", true);
 							};
 
-						ylabel
-						       .text("Skilled Attendant at Birth(%)")
-						       .transition()
-						       .duration(2000)
-						       .call(ylabel);	
+							
 						});
 
 					function showRegion(RegionCode) {

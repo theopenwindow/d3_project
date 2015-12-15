@@ -20,6 +20,12 @@ var tooltip_map = d3.select("body")
                  .append("div")
                  .attr("class", "tooltip");
 
+var LineLabel = map.append('text')
+                       .attr("x", 0)
+                       .attr("y", height/12)
+                       .attr("class","label")
+                       .text("Under Five Mortality Rate in 2015:");
+
 
 // we use queue because we have 2 data files to load.
 queue()

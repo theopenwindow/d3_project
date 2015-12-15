@@ -44,7 +44,7 @@ p{
 }
 .main-nav {
   background: #fff;
-  height: 60px;
+  height: 80px;
   z-index: 150;
   margin-bottom: -80px;
   box-shadow: 0 2px 3px rgba(0,0,0,.4);
@@ -168,7 +168,7 @@ g.legendCells {
         border-right: transparent;
         border-left: 5px solid grey;
         border-bottom: grey;
-        text-shadow:3px 2px 1px rgb(158, 193, 243);
+        text-shadow:3px 2px 1px lightgrey;
         margin-top: 5px;
         margin-right: 100;
         padding-top: 0;
@@ -190,7 +190,7 @@ g.legendCells {
         border-right: transparent;
         border-left: 5px solid grey;
         border-bottom: grey;
-        text-shadow:3px 2px 1px rgb(158, 193, 243);
+        text-shadow:3px 2px 1px lightgrey;
         margin-top: 5px;
         padding-top: 0;
         padding-bottom: 0;
@@ -207,8 +207,7 @@ g.legendCells {
 
        circle {
         fill: grey;
-        fill-opacity: 70%;
-        stroke: white;
+        fill-opacity: 50%;
         stroke-width: 1px;
       }
 
@@ -285,15 +284,20 @@ g.legendCells {
         background-color: #f2f2e8;
         border-top: transparent;
         border-right: transparent;
-        border-left: 5px solid grey;
-        border-bottom: grey;
-        text-shadow:2px 1px 1px rgb(158, 193, 243);
+        text-shadow:2px 1px 1px lightgrey;
         margin-top: 5px;
         padding: 0 6px 0 6px;
         cursor: pointer;
         font-size: 80%;
-
 }
+
+#SAS { border-left: 5px solid #CC0000; }
+#ECS { border-left: 5px solid #0099FF; }
+#MEA { border-left: 5px solid #FF9900; }
+#SSF { border-left: 5px solid #009900; }
+#LCN { border-left: 5px solid #FF0099; }
+#EAS { border-left: 5px solid #FFE100; }
+#NAC { border-left: 5px solid #333399; }
 
 #region_btn {
   padding-left: 30;
@@ -304,16 +308,6 @@ g.legendCells {
   padding-left: 5;
   padding-right: 0;
 }
-/*#filters a:last-child {
-    margin-right: 0;
-}*/
-#filters a.SAS { background: #895881; color: #fff; }
-#filters a.ECS { background: #ED7C31; color: #fff; }
-#filters a.MEA { background: #82A5C0; color: #fff; }
-#filters a.SSF { background: #6E9E75; color: #fff; }
-#filters a.LCN { background: #00BBD6; color: #fff; }
-#filters a.EAS { background: #e25f82; color: #fff; }
-#filters a.NAC { background: #be1932; color: #fff; }
 
 #vis {
     min-height: 550px;
@@ -329,13 +323,13 @@ g path.current, g path.highlight.current {
     stroke: #000;
     stroke-width: 1;
 }
-.SAS.highlight { stroke: #895881; }
-.ECS.highlight { stroke: #ED7C31; }
-.MEA.highlight { stroke: #82A5C0; }
-.SSF.highlight { stroke: #6E9E75; }
-.LCN.highlight { stroke: #00BBD6; }
-.EAS.highlight { stroke: #e25f82; }
-.NAC.highlight { stroke: #be1932; }
+.SAS.highlight { stroke: #CC0000; }
+.ECS.highlight { stroke: #0099FF; }
+.MEA.highlight { stroke: #FF9900; }
+.SSF.highlight { stroke: #009900; }
+.LCN.highlight { stroke: #FF0099; }
+.EAS.highlight { stroke: #FFE100; }
+.NAC.highlight { stroke: #333399; }
 .highlight { stroke-width: 1px; } 
 
 line {

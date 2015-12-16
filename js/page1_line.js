@@ -125,7 +125,7 @@
 				]);
 //draw lines:
 
-			d3.selectAll("g.lines").remove();
+			d3.selectAll("#page1_line g.lines").remove();
 
 				var groups = svgLine.selectAll("g.lines")
 					.data(dataset, function(d){
@@ -225,17 +225,12 @@ queue()
 
   //mouse functions for tooltip
   	function mouseoverFunc_Line(d) {
-
-
-		d3.selectAll("path.lines").classed("unfocused_line", true);
-		d3.select(this).select("path.lines").classed("unfocused_line", false).classed("focused_line", true);
 		tooltip_line
 			.style("display", null) 
 			.html("<p>" + d.country + "</p>");
 	}
 
 	function mouseoutFunc_Line() {
-			d3.selectAll("path.lines").classed("unfocused_line", false).classed("focused_line", false);
 			tooltip_line.style("display", "none");  
 	}
 

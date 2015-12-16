@@ -117,7 +117,8 @@
 			        .attr("class", "lines")
 			        .attr("id", function (d) {
 			            return d.country.replace(/\s/g, '_');
-			        });
+			        })
+			        .style("cursor", "pointer");;
 
 			    //Within each group, create a new line/path,
 			    //binding just the rates data to each one

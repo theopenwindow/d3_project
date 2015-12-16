@@ -89,17 +89,11 @@ header,
         line-height: 1em;
       }
 
-#page1_line g path .unfocused_line{
-        stroke-opacity: 30%;
-      }
 
-
-#page1_line g path .focused_line {
-        fill: none;
+#page1_line g path:hover {
         stroke-width: 1.5px;
         stroke-opacity: 100%;
-        stroke: #912F3A;
-      }
+        stroke: #912F3A;}
 
 /*************************page1_map********************************/
 #page1_text{

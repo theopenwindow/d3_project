@@ -181,6 +181,11 @@ g.legendCells {
              color: black;
              font-weight: bold;}
 
+      .toggle_container {
+        font-family: 'Slabo 27px', serif;
+        padding-top: 10px;
+      }
+
       #page2_text {
         margin-top: 50;
       }

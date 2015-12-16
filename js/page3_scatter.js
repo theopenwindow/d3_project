@@ -1,7 +1,7 @@
 			var widthScatter = 500;
-			var heightScatter = 400;
+			var heightScatter = 340;
 
-			var marginScatter = {top: 20, right: 10, bottom: 50, left: 90 };
+			var marginScatter = {top: 20, right: 10, bottom: 50, left: 75 };
 			var dotRadius = 4;
 
 			var xScaleScatter = d3.scale.linear()
@@ -104,12 +104,12 @@
 				   .duration(2000)
 				   .call(yAxisScatter);
 
-				var tooltip = d3.select("body")
+				var tooltip_scatter = d3.select("body")
                             .append("div")
                             .attr("class", "tooltip");  
 
                 function mousemoveFunc(d) {
-							tooltip
+							tooltip_scatter
 								.style("top", (d3.event.pageY - 10) + "px" )
 								.style("left", (d3.event.pageX + 10) + "px");
 							}
@@ -119,7 +119,7 @@
 								.transition()
 								.attr("fill-opacity", 0.3)
 								.attr("r", 4)
-					    tooltip.style("display", "none");  
+					    tooltip_scatter.style("display", "none");  
 					  };
 
 			   	ylabel
@@ -129,9 +129,28 @@
 
 
 				d3.select("button#literacy").classed("selected", true);
-				d3.select("p#p1").style("display", "inline");
-				d3.select("p#p2").style("display", "none");		
-				d3.select("p#p3").style("display", "none");
+				        d3.select("p#p1").style("display", "inline");
+						d3.select("p#p2").style("display", "none");
+						d3.select("p#p3").style("display", "none");	
+						d3.select("p#p4").style("display", "none");	
+						d3.select("p#p5").style("display", "none");	
+						d3.select("p#p6").style("display", "none");	
+
+				circlesScatter
+					         .on("mouseover", mouseoverFunc);	
+				
+				function mouseoverFunc(d) {
+							d3.select(this)
+								.transition()
+								.attr("r", 6);
+							tooltip_scatter
+								.style("display", null) // this removes the display none setting from it
+								.html("<p>Country: " + d.CountryName +
+											"<br>U5MR: " + d.Year2015 +
+										  "<br> Total Adult Literacy Rate: " + d.literacy + "</p>");
+							d3.selectAll("circle").classed("circleunfocused", true);
+				            d3.select(this).select("circle").classed("circleunfocused", false).classed("circlefocused", true);
+							};
 
 			
 //click to GNI per capita:
@@ -139,8 +158,11 @@
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#literacy").classed("selected", true);
 					    d3.select("p#p1").style("display", "inline");
-						d3.select("p#p2").style("display", "none");		
-						d3.select("p#p3").style("display", "none");
+						d3.select("p#p2").style("display", "none");
+						d3.select("p#p3").style("display", "none");	
+						d3.select("p#p4").style("display", "none");	
+						d3.select("p#p5").style("display", "none");	
+						d3.select("p#p6").style("display", "none");	
 
                         yScaleScatter
 						    .domain(d3.extent(data, function(d){
@@ -171,7 +193,7 @@
 							d3.select(this)
 								.transition()
 								.attr("r", 6);
-							tooltip
+							tooltip_scatter
 								.style("display", null) // this removes the display none setting from it
 								.html("<p>Country: " + d.CountryName +
 											"<br>U5MR: " + d.Year2015 +
@@ -181,7 +203,7 @@
 							};
 
 							ylabel
-						       .text("Total Adult Literacy Rate")
+						       .text("Total Adult Literacy Rate (%)")
 						       .transition()
 						       .duration(2000)
 						       .call(ylabel);
@@ -194,8 +216,11 @@
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#GNI").classed("selected", true);
 					    d3.select("p#p2").style("display", "inline");
-						d3.select("p#p1").style("display", "none");		
-						d3.select("p#p3").style("display", "none");
+						d3.select("p#p1").style("display", "none");	
+						d3.select("p#p3").style("display", "none");	
+						d3.select("p#p4").style("display", "none");	
+						d3.select("p#p5").style("display", "none");	
+						d3.select("p#p6").style("display", "none");
 
                         yScaleScatter
 						    .domain(d3.extent(data, function(d){
@@ -221,7 +246,7 @@
 					         .on("mouseover", mouseoverFunc);
 
 					    ylabel
-						       .text("GNI per Capita")
+						       .text("GNI per Capita ($)")
 						       .transition()
 						       .duration(2000)
 						       .call(ylabel);
@@ -230,7 +255,7 @@
 							d3.select(this)
 								.transition()
 								.attr("r", 6)
-							tooltip
+							tooltip_scatter
 								.style("display", null) // this removes the display none setting from it
 								.html("<p>Country: " + d.CountryName +
 											"<br>U5MR: " + d.Year2015 +
@@ -244,8 +269,11 @@
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#breastfeeding").classed("selected", true);
 					    d3.select("p#p3").style("display", "inline");
-						d3.select("p#p1").style("display", "none");		
-						d3.select("p#p2").style("display", "none");
+					    d3.select("p#p1").style("display", "none");	
+						d3.select("p#p2").style("display", "none");	
+						d3.select("p#p4").style("display", "none");	
+						d3.select("p#p5").style("display", "none");	
+						d3.select("p#p6").style("display", "none");
 
 
                         yScaleScatter
@@ -272,7 +300,7 @@
 					         .on("mouseover", mouseoverFunc);
 
 					    ylabel
-						       .text("Breastfeeding at Age2 (%)")
+						       .text("Breastfeeding at Age 2 (%)")
 						       .transition()
 						       .duration(2000)
 						       .call(ylabel);
@@ -281,11 +309,11 @@
 							d3.select(this)
 								.transition()
 								.attr("r", 6)
-							tooltip
+							tooltip_scatter
 								.style("display", null) // this removes the display none setting from it
 								.html("<p>Country: " + d.CountryName +
 											"<br>U5MR: " + d.Year2015 +
-										  "<br>Breastfeeding at Age2: " + d.breastfeeding + "</p>");
+										  "<br>Breastfeeding at Age 2: " + d.breastfeeding + "</p>");
 							d3.selectAll("circle").classed("circleunfocused", true);
 				            d3.select(this).select("circle").classed("circleunfocused", false).classed("circlefocused", true);
 							};
@@ -297,6 +325,12 @@
 					d3.select("#water").on("click", function() {
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#water").classed("selected", true);
+					    d3.select("p#p4").style("display", "inline");
+					    d3.select("p#p1").style("display", "none");	
+						d3.select("p#p2").style("display", "none");	
+						d3.select("p#p3").style("display", "none");	
+						d3.select("p#p5").style("display", "none");	
+						d3.select("p#p6").style("display", "none");
 
                         yScaleScatter
 						    .domain(d3.extent(data, function(d){
@@ -328,7 +362,7 @@
 							d3.select(this)
 								.transition()
 								.attr("r", 6)
-							tooltip
+							tooltip_scatter
 								.style("display", null) // this removes the display none setting from it
 								.html("<p>Country: " + d.CountryName +
 											"<br>U5MR: " + d.Year2015 +
@@ -342,6 +376,12 @@
 					d3.select("#sanitation").on("click", function() {
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#sanitation").classed("selected", true);
+					    d3.select("p#p5").style("display", "inline");
+					    d3.select("p#p1").style("display", "none");	
+						d3.select("p#p2").style("display", "none");	
+						d3.select("p#p3").style("display", "none");	
+						d3.select("p#p4").style("display", "none");	
+						d3.select("p#p6").style("display", "none");
 
                         yScaleScatter
 						    .domain(d3.extent(data, function(d){
@@ -377,7 +417,7 @@
 							d3.select(this)
 								.transition()
 								.attr("r", 6)
-							tooltip
+							tooltip_scatter
 								.style("display", null) // this removes the display none setting from it
 								.html("<p>Country: " + d.CountryName +
 											"<br>U5MR: " + d.Year2015 +
@@ -393,6 +433,12 @@
 					d3.select("#birth").on("click", function() {
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#birth").classed("selected", true);
+					    d3.select("p#p6").style("display", "inline");
+					    d3.select("p#p1").style("display", "none");	
+						d3.select("p#p2").style("display", "none");	
+						d3.select("p#p3").style("display", "none");	
+						d3.select("p#p4").style("display", "none");	
+						d3.select("p#p5").style("display", "none");
 
                         yScaleScatter
 						    .domain(d3.extent(data, function(d){
@@ -420,7 +466,7 @@
 							d3.select(this)
 								.transition()
 								.attr("r", 6)
-							tooltip
+							tooltip_scatter
 								.style("display", null) // this removes the display none setting from it
 								.html("<p>Country: " + d.CountryName +
 											"<br>U5MR: " + d.Year2015 +

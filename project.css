@@ -168,13 +168,18 @@ g.legendCells {
         border-right: transparent;
         border-left: 5px solid grey;
         border-bottom: grey;
-        text-shadow:3px 2px 1px lightgrey;
         margin-top: 5px;
         margin-right: 100;
         padding-top: 0;
         padding-bottom: 0;
         margin-left: 50px;
+        font-size: 80%;
       }
+
+      .reveal:hover {
+             text-shadow:2px 1px 1px lightgrey;   
+             color: black;
+             font-weight: bold;}
 
       #page2_text {
         margin-top: 50;
@@ -190,13 +195,56 @@ g.legendCells {
         border-right: transparent;
         border-left: 5px solid grey;
         border-bottom: grey;
-        text-shadow:3px 2px 1px lightgrey;
         margin-top: 5px;
         padding-top: 0;
         padding-bottom: 0;
         margin-left: 50px;
         font-size: 80%;
       }
+
+      #Country:hover {
+             text-shadow:2px 1px 1px lightgrey;   
+             color: black;
+             font-weight: bold;
+            }
+      #Region:hover {
+             text-shadow:2px 1px 1px lightgrey;   
+             color: black;
+             font-weight: bold;            }
+      #World:hover {
+             text-shadow:2px 1px 1px lightgrey;   
+             color: black;
+             font-weight: bold;            }
+      #literacy:hover {
+             text-shadow:2px 1px 1px lightgrey;   
+             color: black;
+             font-weight: bold;            }
+      #GNI:hover {
+             text-shadow:2px 1px 1px lightgrey;   
+             color: black;
+             font-weight: bold;            }
+      #breastfeeding:hover {
+             text-shadow:2px 1px 1px lightgrey;   
+             color: black;
+             font-weight: bold;            }
+      #water:hover {
+             text-shadow:2px 1px 1px lightgrey;   
+             color: black;
+             font-weight: bold;            }
+      #sanitation:hover {
+             text-shadow:2px 1px 1px lightgrey;   
+             color: black;
+             font-weight: bold;            }
+      #birth:hover {
+             text-shadow:2px 1px 1px lightgrey;   
+             color: black;
+             font-weight: bold;            }
+
+     #scatter_text{
+              padding-left:50px;
+              padding-bottom: 50px;
+              padding-top: 30px;
+     }
 
       .axis path,
       .axis line {
@@ -271,11 +319,6 @@ g.legendCells {
 
 /************************* page3 Line ********************************/
 
-/*a { color: #821122; }
-*//*#content {
-    width: 925px;
-    margin: 0 auto;
-}*/
 #filters {
     margin-bottom: 20px;
 }
@@ -284,12 +327,16 @@ g.legendCells {
         background-color: #f2f2e8;
         border-top: transparent;
         border-right: transparent;
-        text-shadow:2px 1px 1px lightgrey;
         margin-top: 5px;
         padding: 0 6px 0 6px;
         cursor: pointer;
         font-size: 80%;
 }
+
+#filters a:hover {
+             text-shadow:2px 1px 1px lightgrey;   
+             color: black;
+             font-weight: bold;}
 
 #SAS { border-left: 5px solid #CC0000; }
 #ECS { border-left: 5px solid #0099FF; }
@@ -309,9 +356,6 @@ g.legendCells {
   padding-right: 0;
 }
 
-#vis {
-    min-height: 550px;
-}
 
 
 g path {

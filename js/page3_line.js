@@ -1,13 +1,13 @@
 var regions = { "SAS": "South Asia" , "ECS": "Europe and Central Asia", "MEA": "Middle East & North Africa", "SSF": "Sub-Saharan Africa", "LCN": "Latin America & Caribbean", "EAS": "East Asia &amp; Pacific", "NAC": "North America" },
     w = 400,
-    h = 410,
+    h = 380,
     page3margin = {top: 0, right: 30, bottom: 40, left:50};
     startYear = 1960, 
     endYear = 2015,
     startu5mr = 0,
     endu5mr = 443.5,
     years = d3.range(startYear, endYear + 1),
-    y = d3.scale.linear().domain([endu5mr, startu5mr]).range([0 + page3margin.left, h - page3margin.bottom]),
+    y = d3.scale.linear().domain([endu5mr, startu5mr]).range([0 + 10, h - page3margin.bottom - 40]),
     x = d3.scale.linear().domain([1960, 2015]).range([0 + page3margin.left -5, w]);
 
 var vis = d3.select("#vis")
@@ -88,7 +88,7 @@ vis.selectAll(".xLabel")
     .attr("class", "xLabel")
     .text(String)
     .attr("x", function(d) { return x(d) })
-    .attr("y", h-20)
+    .attr("y", h-60)
     .attr("text-anchor", "middle");
 
 vis.selectAll(".yLabel")
@@ -111,7 +111,7 @@ var Y_Label = vis.append('text')
 
 var X_Label = vis.append('text')
                        .attr("x", w - 10)
-                       .attr("y", h - 5)
+                       .attr("y", h - 45)
                        .style("text-anchor", "end")
                        .attr("class","label")
                         .text("Year");
@@ -164,3 +164,4 @@ $(document).ready(function() {
     });
     
 });
+

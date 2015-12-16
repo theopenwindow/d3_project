@@ -1,12 +1,12 @@
 
 			var marginPage2 = {
-			    top: 50,
+			    top: 120,
 			    right: 100,
-			    bottom: 70,
+			    bottom: 120,
 			    left: 100
 			    };
 
-			    var widthPage2 = 900;
+			    var widthPage2 = 800;
 			    var heightPage2 = 600;
 
 

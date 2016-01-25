@@ -74,6 +74,13 @@ header,
   font-family: inherit;
 }
 
+.click_region {
+  font-size: 90%;
+  margin-bottom: 0;
+  color: grey;
+  font-family: inherit;
+}
+
 #page1_line g line{
         fill: none;
         stroke: lightgrey;
@@ -317,7 +324,11 @@ g.legendCells {
       }
 
       #page3_index {
-        margin-left: 50px;
+          font-size: 90%;
+          margin-left: 50px;
+          margin-bottom: 0;
+          color: grey;
+          font-family: inherit;
       }
 
 

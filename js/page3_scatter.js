@@ -153,7 +153,7 @@
 							};
 
 			
-//click to GNI per capita:
+//click to literacy:
 					d3.select("#literacy").on("click", function() {
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#literacy").classed("selected", true);
@@ -211,7 +211,8 @@
 						});
 
 			
-					
+//click GNI per capita:		
+
 						d3.select("#GNI").on("click", function() {
 						d3.selectAll("button").classed("selected", false);
 					    d3.select("button#GNI").classed("selected", true);
@@ -264,6 +265,8 @@
 				            d3.select(this).select("circle").classed("circleunfocused", false).classed("circlefocused", true);
 							};
 						});
+
+//click breastfeeding:		
 
 						d3.select("#breastfeeding").on("click", function() {
 						d3.selectAll("button").classed("selected", false);
@@ -318,9 +321,9 @@
 				            d3.select(this).select("circle").classed("circleunfocused", false).classed("circlefocused", true);
 							};
 
-								
-
 						});
+
+//click water:
 
 					d3.select("#water").on("click", function() {
 						d3.selectAll("button").classed("selected", false);
@@ -352,6 +355,9 @@
 								return yScaleScatter(+d.water);
 							});
 
+						circlesScatter
+					         .on("mouseover", mouseoverFunc);
+
 						ylabel
 						       .text("Use of Improved Drinking Water Sources(%)")
 						       .transition()
@@ -365,8 +371,8 @@
 							tooltip_scatter
 								.style("display", null) // this removes the display none setting from it
 								.html("<p>Country: " + d.CountryName +
-											"<br>U5MR: " + d.Year2015 +
-										  "<br>Use of Improved Drinking Water Sources: " + d.water + "</p>");
+									  "<br>U5MR: " + d.Year2015 +
+									  "<br>lalala Use of Improved Drinking Water Sources: " + d.water + "</p>");
 							d3.selectAll("circle").classed("circleunfocused", true);
 				            d3.select(this).select("circle").classed("circleunfocused", false).classed("circlefocused", true);
 							};
@@ -455,6 +461,9 @@
 							.attr("cy", function(d) {
 								return yScaleScatter(+d.birth);
 							});
+
+						circlesScatter
+					         .on("mouseover", mouseoverFunc);
 
 						ylabel
 						       .text("Skilled Attendant at Birth(%)")

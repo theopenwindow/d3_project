@@ -186,60 +186,179 @@
 				    }
 				};
 
+				//set default:
+
+						d3.select("p#pHaiti").style("display", "none");
+						d3.select("#pMyanmar").style("display", "none");	
+						d3.select("#pTajikistan").style("display", "none");	
+						d3.select("#pKorea").style("display", "none");	
+						d3.select("#pIndonesia").style("display", "none");	
+						d3.select("#pArmenia").style("display", "none");
+						d3.select("#pNicaragua").style("display", "none");
+						d3.select("#pHonduras").style("display", "none");
+						d3.select("#pSamoa").style("display", "none");
+						d3.select("#pVenezuela").style("display", "none");
+
 
 			  d3.select("button#Haiti").on("click", function() {
 				//   console.log("Haiti");
 				   focus_country("Haiti");
 				   d3.selectAll("button").classed("selected", false);
 				   d3.select("button#Haiti").classed("selected", true);
-				//   //update(case 1);
-				//   //d3.select("section#step1").style("display", "inline-block");
+				   d3.select("p#pHaiti").style("display", "inline");
+					    d3.select("#pMyanmar").style("display", "none");	
+						d3.select("#pTajikistan").style("display", "none");	
+						d3.select("#pKorea").style("display", "none");	
+						d3.select("#pIndonesia").style("display", "none");	
+						d3.select("#pArmenia").style("display", "none");
+						d3.select("#pNicaragua").style("display", "none");
+						d3.select("#pHonduras").style("display", "none");
+						d3.select("#pSamoa").style("display", "none");
+						d3.select("#pVenezuela").style("display", "none");
 				 });
+
 			  d3.select("button#Myanmar").on("click", function(){
 			  	focus_country("Myanmar");
 			  	d3.selectAll("button").classed("selected", false);
 				d3.select("button#Myanmar").classed("selected", true);
+				d3.select("p#pMyanmar").style("display", "inline");
+						d3.select("#pHaiti").style("display", "none");	
+						d3.select("#pTajikistan").style("display", "none");	
+						d3.select("#pKorea").style("display", "none");	
+						d3.select("#pIndonesia").style("display", "none");	
+						d3.select("#pArmenia").style("display", "none");
+						d3.select("#pNicaragua").style("display", "none");
+						d3.select("#pHonduras").style("display", "none");
+						d3.select("#pSamoa").style("display", "none");
+						d3.select("#pVenezuela").style("display", "none");
 			  });
+
 			  d3.select("button#Tajikistan").on("click", function(){
 			  	focus_country("Tajikistan");
 			  	d3.selectAll("button").classed("selected", false);
-				d3.select("button#Tajikistan").classed("selected", true);
-			  })
+				d3.select("p#pTajikistan").style("display", "inline");
+						d3.select("#pHaiti").style("display", "none");	
+						d3.select("#pMyanmar").style("display", "none");	
+						d3.select("#pKorea").style("display", "none");	
+						d3.select("#pIndonesia").style("display", "none");	
+						d3.select("#pArmenia").style("display", "none");
+						d3.select("#pNicaragua").style("display", "none");
+						d3.select("#pHonduras").style("display", "none");
+						d3.select("#pSamoa").style("display", "none");
+						d3.select("#pVenezuela").style("display", "none");
+			  });
+
 			  d3.select("button#Korea").on("click", function(){
 			  	focus_country("Korea");
 			  	d3.selectAll("button").classed("selected", false);
 				d3.select("button#Korea").classed("selected", true);
-			  })
+				d3.select("p#pKorea").style("display", "inline");
+						d3.select("#pHaiti").style("display", "none");	
+						d3.select("#pMyanmar").style("display", "none");	
+						d3.select("#pTajikistan").style("display", "none");	
+						d3.select("#pIndonesia").style("display", "none");	
+						d3.select("#pArmenia").style("display", "none");
+						d3.select("#pNicaragua").style("display", "none");
+						d3.select("#pHonduras").style("display", "none");
+						d3.select("#pSamoa").style("display", "none");
+						d3.select("#pVenezuela").style("display", "none");
+			  });
+
 			  d3.select("button#Indonesia").on("click", function(){
 			  	focus_country("Indonesia");
 			  	d3.selectAll("button").classed("selected", false);
 				d3.select("button#Indonesia").classed("selected", true);
-			  })
+				d3.select("p#pIndonesia").style("display", "inline");
+						d3.select("#pHaiti").style("display", "none");	
+						d3.select("#pMyanmar").style("display", "none");	
+						d3.select("#pTajikistan").style("display", "none");	
+						d3.select("#pKorea").style("display", "none");	
+						d3.select("#pArmenia").style("display", "none");
+						d3.select("#pNicaragua").style("display", "none");
+						d3.select("#pHonduras").style("display", "none");
+						d3.select("#pSamoa").style("display", "none");
+						d3.select("#pVenezuela").style("display", "none");
+			  });
+
 			  d3.select("button#Armenia").on("click", function(){
 			  	focus_country("Armenia");
 			  	d3.selectAll("button").classed("selected", false);
 				d3.select("button#Armenia").classed("selected", true);
-			  })
+				d3.select("p#pArmenia").style("display", "inline");
+						d3.select("#pHaiti").style("display", "none");	
+						d3.select("#pMyanmar").style("display", "none");	
+						d3.select("#pTajikistan").style("display", "none");	
+						d3.select("#pKorea").style("display", "none");	
+						d3.select("#pIndonesia").style("display", "none");
+						d3.select("#pNicaragua").style("display", "none");
+						d3.select("#pHonduras").style("display", "none");
+						d3.select("#pSamoa").style("display", "none");
+						d3.select("#pVenezuela").style("display", "none");
+			  });
+
 			  d3.select("button#Nicaragua").on("click", function(){
 			  	focus_country("Nicaragua");
 			  	d3.selectAll("button").classed("selected", false);
 				d3.select("button#Nicaragua").classed("selected", true);
-			  })
+				d3.select("p#pNicaragua").style("display", "inline");
+						d3.select("#pHaiti").style("display", "none");	
+						d3.select("#pMyanmar").style("display", "none");	
+						d3.select("#pTajikistan").style("display", "none");	
+						d3.select("#pKorea").style("display", "none");	
+						d3.select("#pIndonesia").style("display", "none");
+						d3.select("#pArmenia").style("display", "none");
+						d3.select("#pHonduras").style("display", "none");
+						d3.select("#pSamoa").style("display", "none");
+						d3.select("#pVenezuela").style("display", "none");
+			  });
+
 			  d3.select("button#Honduras").on("click", function(){
 			  	focus_country("Honduras");
 			  	d3.selectAll("button").classed("selected", false);
 				d3.select("button#Honduras").classed("selected", true);
-			  })
+				d3.select("p#pHonduras").style("display", "inline");
+						d3.select("#pHaiti").style("display", "none");	
+						d3.select("#pMyanmar").style("display", "none");	
+						d3.select("#pTajikistan").style("display", "none");	
+						d3.select("#pKorea").style("display", "none");	
+						d3.select("#pIndonesia").style("display", "none");
+						d3.select("#pArmenia").style("display", "none");
+						d3.select("#pNicaragua").style("display", "none");
+						d3.select("#pSamoa").style("display", "none");
+						d3.select("#pVenezuela").style("display", "none");
+			  });
+
 			  d3.select("button#Samoa").on("click", function(){
 			  	focus_country("Samoa");
 			  	d3.selectAll("button").classed("selected", false);
 				d3.select("button#Samoa").classed("selected", true);
-			  })
+				d3.select("p#pSamoa").style("display", "inline");
+						d3.select("#pHaiti").style("display", "none");	
+						d3.select("#pMyanmar").style("display", "none");	
+						d3.select("#pTajikistan").style("display", "none");	
+						d3.select("#pKorea").style("display", "none");	
+						d3.select("#pIndonesia").style("display", "none");
+						d3.select("#pArmenia").style("display", "none");
+						d3.select("#pNicaragua").style("display", "none");
+						d3.select("#pHonduras").style("display", "none");
+						d3.select("#pVenezuela").style("display", "none");
+			  });
+
 			  d3.select("button#Venezuela").on("click", function(){
 			  	focus_country("Venezuela");
 			  	d3.selectAll("button").classed("selected", false);
 				d3.select("button#Venezuela").classed("selected", true);
-			  })
+				d3.select("p#pVenezuela").style("display", "inline");
+						d3.select("#pHaiti").style("display", "none");	
+						d3.select("#pMyanmar").style("display", "none");	
+						d3.select("#pTajikistan").style("display", "none");	
+						d3.select("#pKorea").style("display", "none");	
+						d3.select("#pIndonesia").style("display", "none");
+						d3.select("#pArmenia").style("display", "none");
+						d3.select("#pNicaragua").style("display", "none");
+						d3.select("#pHonduras").style("display", "none");
+						d3.select("#pSamoa").style("display", "none");
+			  });
 
 			
 			//display data
@@ -263,13 +382,13 @@
 				  .defer(d3.csv, "data/timeline.csv")
 				  .await(display);
 
-			//jquery for button
+// 			//jquery for button
 
-$(document).ready(function(){
-$(".toggle_container").hide(); 
-$("button.reveal").click(function(){
-    $(this).toggleClass("active").next().slideToggle("fast");
-    return false; 
-});
- $("a[href='" + window.location.hash + "']").parent(".reveal").click();
-});
+// $(document).ready(function(){
+// $(".toggle_container").hide(); 
+// $("button.reveal").click(function(){
+//     $(this).toggleClass("active").next().slideToggle("fast");
+//     return false; 
+// });
+//  $("a[href='" + window.location.hash + "']").parent(".reveal").click();
+// });
